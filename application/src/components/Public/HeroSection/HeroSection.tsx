@@ -39,7 +39,7 @@ const HeroSection = () => {
             alignItems: 'center',
             gap: DIMENSIONS.spacing.container
           }}>
-            <Typography
+            <Typography 
               variant="h1"
               component="h1"
               id="hero-title"
@@ -49,9 +49,9 @@ const HeroSection = () => {
                 width: '100%'
               }}
             >
-              {t('hero.title')}
+              Rizi | ريزي
             </Typography>
-            <Typography
+            <Typography 
               variant="h3"
               component="h2"
               fontWeight="bold"
@@ -61,9 +61,9 @@ const HeroSection = () => {
                 width: '100%'
               }}
             >
-              {t('hero.subtitle')}
+              Multi-compound operations built for the Gulf
             </Typography>
-            <Typography
+            <Typography 
               variant="h6"
               component="p"
               color="text.secondary"
@@ -74,7 +74,8 @@ const HeroSection = () => {
                 width: '100%'
               }}
             >
-              {t('hero.description')}
+              Manage estates, resident services, vendors, and collections from one Arabic-first platform tailored to compound living.
+              Keep owners, operators, and tenants connected with bilingual workflows and data you can act on.
             </Typography>
             <Box component="nav" aria-label="Primary actions">
               <CTAButtons />

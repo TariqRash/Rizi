@@ -6,42 +6,31 @@
 // Brand and UI Colors
 export const COLORS = {
   // CTA Button Colors
-  github: '#000000',
-  githubHover: '#333333',
-  deploy: '#0069ff',
-  deployHover: '#0056cc',
-  
+  primary: '#0F2B5B',
+  primaryHover: '#0b2349',
+  secondary: '#00A99D',
+  secondaryHover: '#009283',
+
   // Feature Card Icon Colors
-  deployment: '#795548',
-  cloud: '#00bcd4', 
-  ai: '#e91e63',
-  database: '#4caf50',
-  payment: '#ff9800',
-  security: '#f44336',
-  email: '#9c27b0',
-  admin: '#607d8b',
-  monitoring: '#4caf50',
+  operations: '#0F2B5B',
+  workflows: '#00A99D',
+  arabic: '#F59E0B',
+  tickets: '#7C3AED',
+  billing: '#EF4444',
+  vendors: '#2563EB',
+  access: '#F97316',
+  insights: '#10B981',
+  api: '#6B7280',
 } as const;
 
 // External URLs
 export const URLS = {
-  // Repository and Deployment
-  githubRepo: 'https://github.com/digitalocean/sea-notes-saas-starter-kit',
-  deployment: 'https://cloud.digitalocean.com/apps/new?repo=https://github.com/digitalocean/sea-notes-saas-starter-kit/tree/main',
-  
-  // DigitalOcean Services
-  appPlatform: 'https://www.digitalocean.com/products/app-platform',
-  spaces: 'https://www.digitalocean.com/products/spaces',
-  databases: 'https://www.digitalocean.com/products/managed-databases',
-  gradient: 'https://www.digitalocean.com/products/gradientai',
-  functions: 'https://www.digitalocean.com/products/functions',
-  
-  // Support and Community
-  support: 'https://www.digitalocean.com/support',
-  twitter: 'https://twitter.com/digitalocean',
-  community: 'https://www.digitalocean.com/community',
-  status: 'https://status.digitalocean.com',
-  documentation: 'https://docs.digitalocean.com',
+  // Product and contact
+  marketingSite: 'https://rizi.sa',
+  demo: 'https://rizi.sa/demo',
+  arabicDeck: 'https://rizi.sa/rizi-arabic-one-pager.pdf',
+  documentation: 'https://rizi.sa/docs',
+  contact: 'mailto:hello@rizi.sa',
 } as const;
 
 // Component Dimensions
@@ -86,49 +75,58 @@ export const DIMENSIONS = {
 // Terminal Commands
 export const TERMINAL = {
   commands: [
-    '$ git clone https://github.com/digitalocean/sea-notes-saas-starter-kit.git',
-    '$ cd sea-notes-saas-starter-kit', 
-    '$ npm install',
-    '$ npm run dev'
+    '$ rizi login --tenant gulf-residences',
+    '$ rizi compounds:list --region=gcc',
+    '$ rizi residents:sync --compound=riyadh-villas --locale=ar',
+    '$ rizi tickets:create --type=maintenance --sla=4h --notify=operations@rizi.sa'
   ].join('\n'),
 } as const;
 
 // Feature Data
 export const FEATURES = [
   {
-    key: 'oneClickDeployment',
-    color: COLORS.deployment,
+    title: 'Multi-compound command center',
+    description: 'One dashboard to orchestrate villas, towers, and staff housing with real-time occupancy and compliance.',
+    color: COLORS.operations,
   },
   {
-    key: 'spaces',
-    color: COLORS.cloud,
+    title: 'Resident & services workflows',
+    description: 'Guided requests for maintenance, housekeeping, and guest access that keep tenants and teams aligned.',
+    color: COLORS.workflows,
   },
   {
-    key: 'gradient',
-    color: COLORS.ai,
+    title: 'Arabic-first experience',
+    description: 'Arabic interfaces, RTL layout, and bilingual notifications for Gulf communities.',
+    color: COLORS.arabic,
   },
   {
-    key: 'database',
-    color: COLORS.database,
+    title: 'Smart ticketing & SLAs',
+    description: 'Auto-prioritized work orders, escalations, and SLA timers tailored to each compound.',
+    color: COLORS.tickets,
   },
   {
-    key: 'stripe',
-    color: COLORS.payment,
+    title: 'Billing & collections',
+    description: 'Invoices, collections reminders, and unified resident ledgers connected to finance.',
+    color: COLORS.billing,
   },
   {
-    key: 'auth',
-    color: COLORS.security,
+    title: 'Vendor scheduling & dispatch',
+    description: 'Roster internal teams and third-party vendors with time windows, checklists, and approvals.',
+    color: COLORS.vendors,
   },
   {
-    key: 'email',
-    color: COLORS.email,
+    title: 'Access & amenities control',
+    description: 'Manage parking, amenities, and entry codes with resident-level permissions.',
+    color: COLORS.access,
   },
   {
-    key: 'admin',
-    color: COLORS.admin,
+    title: 'Analytics & compliance',
+    description: 'Dashboards for occupancy, collections, and HSSE compliance across every compound.',
+    color: COLORS.insights,
   },
   {
-    key: 'monitoring',
-    color: COLORS.monitoring,
+    title: 'Open API & webhooks',
+    description: 'Push data to ERPs, BI tools, and messaging stacks with secure webhooks.',
+    color: COLORS.api,
   },
 ] as const;
