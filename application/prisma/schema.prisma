@@ -16,14 +16,21 @@ model User {
   compound       Compound       @relation(fields: [compoundId], references: [id])
   compoundId     String
 
-  role           Role           @default(USER)
-  createdAt      DateTime       @default(now())
+  role      Role     @default(USER)
+  createdAt DateTime @default(now())
 
-  subscription   Subscription?  @relation("UserSubscription")
-  notes          Note[]
+  subscription Subscription? @relation("UserSubscription")
+  notes        Note[]
 
-  verificationToken String? // Token for email verification
-  emailVerified     Boolean @default(false) // Email verification status
+  verificationToken String?
+  emailVerified     Boolean @default(false)
+
+  compoundRoles    CompoundRoleAssignment[]
+  ownedUnits       Owner[]
+  residents        Resident[]
+  serviceRequests  ServiceRequest[]         @relation("UserServiceRequests")
+  facilityBookings FacilityBooking[]        @relation("UserFacilityBookings")
+  accessLogs       AccessLog[]              @relation("UserAccessLogs")
 }
 
 model Compound {
@@ -37,22 +44,22 @@ model Compound {
 }
 
 model Subscription {
-  id         String   @id @default(uuid())
-  user       User     @relation("UserSubscription", fields: [userId], references: [id])
-  userId     String   @unique
+  id         String              @id @default(uuid())
+  user       User                @relation("UserSubscription", fields: [userId], references: [id])
+  userId     String              @unique
   status     SubscriptionStatus?
   plan       SubscriptionPlan?
   customerId String?
-  createdAt  DateTime @default(now())
+  createdAt  DateTime            @default(now())
 }
 
 model Note {
-  id         String   @id @default(uuid())
-  user       User     @relation(fields: [userId], references: [id])
-  userId     String
-  title      String
-  content    String
-  createdAt  DateTime @default(now())
+  id        String   @id @default(uuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  title     String
+  content   String
+  createdAt DateTime @default(now())
 }
 
 model VerificationToken {
@@ -61,6 +68,232 @@ model VerificationToken {
   expires    DateTime
 
   @@id([identifier, token])
+}
+
+model Compound {
+  id        String   @id @default(uuid())
+  name      String
+  address   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  buildings        Building[]
+  units            Unit[]
+  owners           Owner[]
+  residents        Resident[]
+  serviceProviders ServiceProvider[]
+  serviceRequests  ServiceRequest[]
+  facilityBookings FacilityBooking[]
+  invoices         Invoice[]
+  expenses         Expense[]
+  accessLogs       AccessLog[]
+  visitors         Visitor[]
+  roles            CompoundRoleAssignment[]
+
+  @@unique([name])
+}
+
+model CompoundRoleAssignment {
+  id         String       @id @default(uuid())
+  compound   Compound     @relation(fields: [compoundId], references: [id])
+  compoundId String
+  user       User         @relation(fields: [userId], references: [id])
+  userId     String
+  role       CompoundRole @default(RESIDENT)
+  createdAt  DateTime     @default(now())
+
+  @@unique([compoundId, userId])
+}
+
+model Building {
+  id         String   @id @default(uuid())
+  name       String
+  compound   Compound @relation(fields: [compoundId], references: [id])
+  compoundId String
+  units      Unit[]
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([compoundId, name])
+}
+
+model Unit {
+  id               String            @id @default(uuid())
+  number           String
+  type             UnitType
+  status           UnitStatus        @default(VACANT)
+  building         Building          @relation(fields: [buildingId], references: [id])
+  buildingId       String
+  compound         Compound          @relation(fields: [compoundId], references: [id])
+  compoundId       String
+  residents        Resident[]
+  owners           Owner[]
+  serviceRequests  ServiceRequest[]
+  facilityBookings FacilityBooking[]
+  invoices         Invoice[]
+  expenses         Expense[]
+  visitors         Visitor[]
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+
+  @@unique([buildingId, number])
+  @@index([compoundId, status])
+}
+
+model Owner {
+  id         String   @id @default(uuid())
+  name       String
+  email      String?
+  phone      String?
+  user       User?    @relation(fields: [userId], references: [id])
+  userId     String?
+  compound   Compound @relation(fields: [compoundId], references: [id])
+  compoundId String
+  units      Unit[]
+  createdAt  DateTime @default(now())
+}
+
+model Resident {
+  id               String            @id @default(uuid())
+  user             User              @relation(fields: [userId], references: [id])
+  userId           String
+  unit             Unit              @relation(fields: [unitId], references: [id])
+  unitId           String
+  compound         Compound          @relation(fields: [compoundId], references: [id])
+  compoundId       String
+  isPrimary        Boolean           @default(false)
+  moveInDate       DateTime?
+  moveOutDate      DateTime?
+  householdMembers HouseholdMember[]
+  serviceRequests  ServiceRequest[]
+  facilityBookings FacilityBooking[]
+  accessLogs       AccessLog[]
+  visitors         Visitor[]
+  createdAt        DateTime          @default(now())
+  invoices         Invoice[]
+
+  @@unique([compoundId, userId])
+}
+
+model HouseholdMember {
+  id         String   @id @default(uuid())
+  name       String
+  relation   String
+  phone      String?
+  resident   Resident @relation(fields: [residentId], references: [id])
+  residentId String
+  createdAt  DateTime @default(now())
+}
+
+model ServiceProvider {
+  id              String           @id @default(uuid())
+  name            String
+  email           String?
+  phone           String?
+  servicesOffered String?
+  compound        Compound         @relation(fields: [compoundId], references: [id])
+  compoundId      String
+  serviceRequests ServiceRequest[]
+  createdAt       DateTime         @default(now())
+}
+
+model ServiceRequest {
+  id           String                 @id @default(uuid())
+  title        String
+  description  String
+  status       ServiceRequestStatus   @default(OPEN)
+  priority     ServiceRequestPriority @default(MEDIUM)
+  compound     Compound               @relation(fields: [compoundId], references: [id])
+  compoundId   String
+  unit         Unit?                  @relation(fields: [unitId], references: [id])
+  unitId       String?
+  resident     Resident?              @relation(fields: [residentId], references: [id])
+  residentId   String?
+  provider     ServiceProvider?       @relation(fields: [providerId], references: [id])
+  providerId   String?
+  createdBy    User                   @relation("UserServiceRequests", fields: [createdById], references: [id])
+  createdById  String
+  scheduledFor DateTime?
+  resolvedAt   DateTime?
+  createdAt    DateTime               @default(now())
+  updatedAt    DateTime               @updatedAt
+}
+
+model Visitor {
+  id            String      @id @default(uuid())
+  name          String
+  contactNumber String?
+  purpose       String?
+  expectedAt    DateTime?
+  compound      Compound    @relation(fields: [compoundId], references: [id])
+  compoundId    String
+  unit          Unit?       @relation(fields: [unitId], references: [id])
+  unitId        String?
+  resident      Resident?   @relation(fields: [residentId], references: [id])
+  residentId    String?
+  accessLogs    AccessLog[]
+  createdAt     DateTime    @default(now())
+}
+
+model AccessLog {
+  id           String    @id @default(uuid())
+  compound     Compound  @relation(fields: [compoundId], references: [id])
+  compoundId   String
+  visitor      Visitor?  @relation(fields: [visitorId], references: [id])
+  visitorId    String?
+  resident     Resident? @relation(fields: [residentId], references: [id])
+  residentId   String?
+  recordedBy   User      @relation("UserAccessLogs", fields: [recordedById], references: [id])
+  recordedById String
+  entryAt      DateTime  @default(now())
+  exitAt       DateTime?
+  notes        String?
+}
+
+model FacilityBooking {
+  id           String        @id @default(uuid())
+  facilityName String
+  startTime    DateTime
+  endTime      DateTime
+  status       BookingStatus @default(REQUESTED)
+  compound     Compound      @relation(fields: [compoundId], references: [id])
+  compoundId   String
+  unit         Unit?         @relation(fields: [unitId], references: [id])
+  unitId       String?
+  resident     Resident?     @relation(fields: [residentId], references: [id])
+  residentId   String?
+  bookedBy     User          @relation("UserFacilityBookings", fields: [bookedById], references: [id])
+  bookedById   String
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model Invoice {
+  id          String        @id @default(uuid())
+  description String
+  amount      Decimal       @db.Decimal(12, 2)
+  dueDate     DateTime
+  status      InvoiceStatus @default(DRAFT)
+  issuedAt    DateTime      @default(now())
+  paidAt      DateTime?
+  compound    Compound      @relation(fields: [compoundId], references: [id])
+  compoundId  String
+  unit        Unit?         @relation(fields: [unitId], references: [id])
+  unitId      String?
+  resident    Resident?     @relation(fields: [residentId], references: [id])
+  residentId  String?
+}
+
+model Expense {
+  id          String   @id @default(uuid())
+  category    String
+  description String
+  amount      Decimal  @db.Decimal(12, 2)
+  incurredAt  DateTime @default(now())
+  compound    Compound @relation(fields: [compoundId], references: [id])
+  compoundId  String
+  unit        Unit?    @relation(fields: [unitId], references: [id])
+  unitId      String?
 }
 
 enum Role {
@@ -77,4 +310,56 @@ enum SubscriptionStatus {
 enum SubscriptionPlan {
   FREE
   PRO
+}
+
+enum CompoundRole {
+  COMPOUND_ADMIN
+  RESIDENT_ADMIN
+  RESIDENT
+  OWNER
+  STAFF
+}
+
+enum UnitType {
+  APARTMENT
+  VILLA
+  TOWNHOUSE
+  OFFICE
+  PARKING
+}
+
+enum UnitStatus {
+  VACANT
+  OCCUPIED
+  MAINTENANCE
+  RESERVED
+}
+
+enum ServiceRequestStatus {
+  OPEN
+  IN_PROGRESS
+  COMPLETED
+  CANCELED
+}
+
+enum ServiceRequestPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum BookingStatus {
+  REQUESTED
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
+
+enum InvoiceStatus {
+  DRAFT
+  SENT
+  PAID
+  OVERDUE
+  CANCELED
 }

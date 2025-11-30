@@ -13,10 +13,10 @@ const CTASection = () => {
         <Stack spacing={DIMENSIONS.spacing.container} textAlign="center">
           <Box component="header">
             <Typography variant="h4" component="h3" id="cta-title" fontWeight="bold">
-              Ready to launch your SaaS?
+              Bring every compound into Rizi | جرّب ريزي لكل مجمع
             </Typography>
             <Typography variant="h6" color="text.secondary">
-              Our template provides everything you need to get your SaaS up and running quickly. Don&apos;t waste time on boilerplate - focus on what makes your product unique.
+              Show residents, operators, and vendors what Arabic-first property operations feels like. Centralize requests, access, billing, and reporting while keeping your teams in sync.
             </Typography>
           </Box>
           <Box component="nav" aria-label="Get started actions">

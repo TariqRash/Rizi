@@ -1,8 +1,8 @@
 import React from 'react';
 import { Button, Stack } from '@mui/material';
 import Link from 'next/link';
-import GitHubIcon from '@mui/icons-material/GitHub';
-import LaunchIcon from '@mui/icons-material/Launch';
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import { COLORS, URLS, DIMENSIONS } from 'constants/landing';
 
 /**
@@ -13,39 +13,39 @@ const CTAButtons = () => {
     <Stack direction={{ xs: 'column', sm: 'row' }} spacing={DIMENSIONS.spacing.small} justifyContent="center">
       <Button
         component={Link}
-        href={URLS.githubRepo}
+        href={URLS.demo}
         target="_blank"
         rel="noopener noreferrer"
         variant="contained"
         size="large"
-        startIcon={<GitHubIcon />}
+        startIcon={<CalendarTodayIcon />}
         sx={{
-          backgroundColor: COLORS.github,
+          backgroundColor: COLORS.primary,
           color: '#ffffff',
           '&:hover': {
-            backgroundColor: COLORS.githubHover,
+            backgroundColor: COLORS.primaryHover,
           },
         }}
       >
-        View the code
+        Book a Rizi demo
       </Button>
       <Button
         component={Link}
-        href={URLS.deployment}
+        href={URLS.arabicDeck}
         target="_blank"
         rel="noopener noreferrer"
         variant="contained"
         size="large"
-        startIcon={<LaunchIcon />}
+        startIcon={<PictureAsPdfIcon />}
         sx={{
-          backgroundColor: COLORS.deploy,
+          backgroundColor: COLORS.secondary,
           color: '#ffffff',
           '&:hover': {
-            backgroundColor: COLORS.deployHover,
+            backgroundColor: COLORS.secondaryHover,
           },
         }}
       >
-        Deploy to DigitalOcean
+        View Arabic product deck
       </Button>
     </Stack>
   );
