@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { signIn } from 'next-auth/react';
+import { useI18n } from 'context/I18nContext';
 
 /**
  * MagicLinkVerifier
@@ -16,13 +17,14 @@ export default function MagicLinkVerifier() {
   const searchParams = useSearchParams();
   const [status, setStatus] = useState<'verifying' | 'success' | 'error'>('verifying');
   const [error, setError] = useState<string | null>(null);
+  const { t } = useI18n();
 
   useEffect(() => {
     const token = searchParams.get('token');
     const email = searchParams.get('email');
     if (!token || !email) {
       setStatus('error');
-      setError('Missing token or email in the URL.');
+      setError(t('auth.signup.genericError'));
       return;
     }
 
@@ -34,19 +36,19 @@ export default function MagicLinkVerifier() {
       } catch (err) {
         setStatus('error');
         setError(
-          'Failed to verify magic link. ' + (err instanceof Error ? err.message : 'Unknown error')
+          t('auth.signup.genericError') + (err instanceof Error ? ` ${err.message}` : '')
         );
       }
     };
 
     verifyMagicLink();
-  }, [router, searchParams]);
+  }, [router, searchParams, t]);
 
   return (
     <div style={{ maxWidth: 400, margin: '0 auto', padding: 32 }}>
-      {status === 'verifying' && <div>Verifying magic link...</div>}
-      {status === 'success' && <div>Login successful! Redirecting...</div>}
-      {status === 'error' && <div style={{ color: 'red' }}>Error: {error}</div>}
+      {status === 'verifying' && <div>{t('auth.magic.title')}</div>}
+      {status === 'success' && <div>{t('auth.magic.subtitle')}</div>}
+      {status === 'error' && <div style={{ color: 'red' }}>{error}</div>}
     </div>
   );
 }

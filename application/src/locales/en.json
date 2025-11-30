@@ -1,0 +1,144 @@
+{
+  "nav": {
+    "brand": "SeaNotes",
+    "pricing": "Pricing",
+    "login": "Log in",
+    "signup": "Sign up",
+    "signout": "Sign out",
+    "language": "Language"
+  },
+  "hero": {
+    "title": "SeaNotes",
+    "subtitle": "Build Your SaaS Faster Than Ever",
+    "description": "Launch your SaaS product in record time with our powerful, ready-to-use template. Packed with modern technologies and essential integrations."
+  },
+  "ctaButtons": {
+    "viewCode": "View the code",
+    "deploy": "Deploy to DigitalOcean"
+  },
+  "ctaSection": {
+    "title": "Ready to launch your SaaS?",
+    "description": "Our template provides everything you need to get your SaaS up and running quickly. Don't waste time on boilerplate - focus on what makes your product unique."
+  },
+  "features": {
+    "headline": "What's included",
+    "oneClickDeployment": {
+      "title": "One-Click Deployment",
+      "description": "Deploy directly to DigitalOcean App Platform with automated setup and configuration."
+    },
+    "spaces": {
+      "title": "DigitalOcean Spaces",
+      "description": "File storage and CDN integration using DigitalOcean Spaces."
+    },
+    "gradient": {
+      "title": "DigitalOcean Gradient",
+      "description": "AI-powered invoice generation using DigitalOcean's Serverless Inference API."
+    },
+    "database": {
+      "title": "PostgreSQL and Prisma ORM",
+      "description": "Database used for efficient data management and scalability."
+    },
+    "stripe": {
+      "title": "Stripe Integration",
+      "description": "Used for subscription management."
+    },
+    "auth": {
+      "title": "NextAuth Authentication",
+      "description": "Built-in authentication system for better user management."
+    },
+    "email": {
+      "title": "Resend Email Service",
+      "description": "Email service used for sending authentication emails as well as invoices."
+    },
+    "admin": {
+      "title": "Admin Dashboard",
+      "description": "Complete admin interface for managing users, subscriptions, and system monitoring."
+    },
+    "monitoring": {
+      "title": "System Health Monitoring",
+      "description": "Real-time monitoring of all services including database, email, storage, and AI services."
+    }
+  },
+  "preview": {
+    "heading": "Application Preview",
+    "sidebar": {
+      "dashboard": "Dashboard",
+      "notes": "My Notes",
+      "subscription": "Subscription",
+      "account": "Account"
+    },
+    "content": {
+      "title": "My Notes",
+      "cta": "Add Note",
+      "cards": {
+        "ideaTitle": "Project Ideas",
+        "ideaBody": "Build a SaaS starter kit...",
+        "meetingTitle": "Meeting Notes",
+        "meetingBody": "Discuss new features...",
+        "todoTitle": "Todo List",
+        "todoBody": "Implement authentication...",
+        "recent": "2 hours ago",
+        "yesterday": "1 day ago",
+        "daysAgo": "3 days ago"
+      }
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Welcome Back",
+      "subtitle": "Sign in to your account to continue",
+      "email": "Email",
+      "emailPlaceholder": "Enter your email",
+      "password": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "submit": "Sign In",
+      "noAccount": "Don't have an account?",
+      "signup": "Sign up",
+      "forgot": "Forgot your password?"
+    },
+    "signup": {
+      "title": "Create Account",
+      "subtitle": "Sign up to get started with your account",
+      "email": "Email",
+      "emailPlaceholder": "Enter your email",
+      "password": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "confirmPassword": "Confirm Password",
+      "confirmPasswordPlaceholder": "Confirm your password",
+      "submit": "Create Account",
+      "already": "Already have an account?",
+      "signin": "Sign in",
+      "mismatch": "Passwords do not match.",
+      "genericError": "Something went wrong during signup. Please try again later.",
+      "generic": "Something went wrong",
+      "success": "Account created."
+    },
+    "forgot": {
+      "title": "Forgot password",
+      "subtitle": "Enter your email to receive password reset instructions",
+      "email": "Email",
+      "emailPlaceholder": "Enter your email",
+      "submit": "Send reset link",
+      "back": "Back to login"
+    },
+    "reset": {
+      "title": "Reset password",
+      "subtitle": "Choose a new password for your account",
+      "password": "New password",
+      "passwordPlaceholder": "Enter your new password",
+      "confirmPassword": "Confirm password",
+      "confirmPasswordPlaceholder": "Re-enter your new password",
+      "submit": "Reset password",
+      "mismatch": "Passwords do not match"
+    },
+    "magic": {
+      "title": "Check your email",
+      "subtitle": "We've sent you a magic link to sign in",
+      "resend": "Resend email"
+    }
+  },
+  "languageSwitcher": {
+    "arabic": "Arabic",
+    "english": "English"
+  }
+}

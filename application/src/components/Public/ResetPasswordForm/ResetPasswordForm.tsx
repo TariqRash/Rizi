@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { Box, Card, CardContent, Typography, TextField, Stack, Button } from '@mui/material';
+import { useI18n } from 'context/I18nContext';
 
 /**
  * ResetPasswordForm renders a form for users to reset their password using a token from the URL.
@@ -16,16 +17,13 @@ const ResetPasswordForm: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  const { t } = useI18n();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
-    if (!password || !confirmPassword) {
-      setError('Please fill in all fields.');
-      return;
-    }
     if (password !== confirmPassword) {
-      setError('Passwords do not match.');
+      setError(t('auth.reset.mismatch'));
       return;
     }
     try {
@@ -36,14 +34,13 @@ const ResetPasswordForm: React.FC = () => {
       });
       const data = await res.json();
       if (!res.ok || data.error) {
-        setError(data.error || 'Something went wrong.');
+        setError(data.error || t('auth.signup.generic'));
       } else {
         setSuccess(true);
       }
     } catch (err) {
       setError(
-        'Something went wrong. Please try again later. ' +
-          (err instanceof Error ? `: ${err.message}` : '')
+        t('auth.signup.genericError') + (err instanceof Error ? `: ${err.message}` : '')
       );
     }
   };
@@ -61,13 +58,13 @@ const ResetPasswordForm: React.FC = () => {
           <CardContent>
             <Stack spacing={3} alignItems="center">
               <Typography variant="h5" fontWeight="bold">
-                Password Reset Successful
+                {t('auth.reset.title')}
               </Typography>
               <Typography>
-                Your password has been updated. You can now log in with your new password.
+                {t('auth.reset.subtitle')}
               </Typography>
               <Button variant="contained" color="primary" onClick={() => router.push('/login')}>
-                Go to Login
+                {t('auth.login.submit')}
               </Button>
             </Stack>
           </CardContent>
@@ -82,12 +79,12 @@ const ResetPasswordForm: React.FC = () => {
         <CardContent>
           <Stack spacing={3}>
             <Typography variant="h5" fontWeight="bold">
-              Reset Password
+              {t('auth.reset.title')}
             </Typography>
             <form onSubmit={handleSubmit}>
               <Stack spacing={2}>
                 <TextField
-                  label="New Password"
+                  label={t('auth.reset.password')}
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -95,7 +92,7 @@ const ResetPasswordForm: React.FC = () => {
                   fullWidth
                 />
                 <TextField
-                  label="Confirm Password"
+                  label={t('auth.reset.confirmPassword')}
                   type="password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
@@ -104,7 +101,7 @@ const ResetPasswordForm: React.FC = () => {
                 />
                 {error && <Typography color="error">{error}</Typography>}
                 <Button type="submit" variant="contained" color="primary" fullWidth>
-                  Update Password
+                  {t('auth.reset.submit')}
                 </Button>
               </Stack>
             </form>

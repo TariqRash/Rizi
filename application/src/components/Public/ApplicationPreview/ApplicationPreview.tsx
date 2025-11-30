@@ -1,32 +1,37 @@
+"use client";
+
 import React from 'react';
 import { Typography, Box, Container, Stack, Card } from '@mui/material';
 import { Button } from '@mui/material';
 import { DIMENSIONS } from 'constants/landing';
+import { useI18n } from 'context/I18nContext';
 
 /**
  * ApplicationPreview component
  */
 const ApplicationPreview = () => {
+  const { t } = useI18n();
+
   return (
     <Box component="section" py={DIMENSIONS.spacing.section} bgcolor="background.default" aria-labelledby="preview-title">
       <Container maxWidth="lg">
         <Stack spacing={DIMENSIONS.spacing.card} textAlign="center">
           <Box component="header" className="sr-only">
             <Typography variant="h3" component="h3" id="preview-title">
-              Application Preview
+              {t('preview.heading')}
             </Typography>
           </Box>
-          <Box sx={{ 
+          <Box sx={{
             position: 'relative',
             display: 'flex',
             justifyContent: 'center'
           }}>
-            <Box 
-              component="figure" 
+            <Box
+              component="figure"
               aria-label="SeaNotes application interface mockup"
-              sx={{ 
-                bgcolor: 'background.paper', 
-                borderRadius: 3, 
+              sx={{
+                bgcolor: 'background.paper',
+                borderRadius: 3,
                 border: '1px solid',
                 borderColor: 'divider',
                 overflow: 'hidden',
@@ -34,7 +39,8 @@ const ApplicationPreview = () => {
                 maxWidth: '100%',
                 width: '100%',
                 margin: 0
-              }}>
+              }}
+            >
               {/* Mock application screenshot */}
               <Box sx={{
                 bgcolor: '#1a1a1a',
@@ -52,7 +58,7 @@ const ApplicationPreview = () => {
                   SeaNotes - localhost:3000
                 </Typography>
               </Box>
-              
+
               <Box sx={{
                 display: 'flex',
                 minHeight: DIMENSIONS.layout.minHeight,
@@ -72,42 +78,41 @@ const ApplicationPreview = () => {
                     </Typography>
                     <Box sx={{ height: 1, bgcolor: 'divider', my: 1 }} />
                     <Typography variant="body2" sx={{ color: 'text.secondary', fontWeight: 500 }}>
-                      Dashboard
+                      {t('preview.sidebar.dashboard')}
                     </Typography>
                     <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                      My Notes
+                      {t('preview.sidebar.notes')}
                     </Typography>
                     <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                      Subscription
+                      {t('preview.sidebar.subscription')}
                     </Typography>
                     <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                      Account
+                      {t('preview.sidebar.account')}
                     </Typography>
                   </Stack>
                 </Box>
-                
+
                 {/* Main content */}
                 <Box sx={{ flex: 1, p: DIMENSIONS.spacing.stack }}>
                   <Stack spacing={DIMENSIONS.spacing.stack}>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                       <Typography variant="h5" fontWeight="bold">
-                        My Notes
+                        {t('preview.content.title')}
                       </Typography>
                       <Button variant="contained" size="small" sx={{ bgcolor: 'primary.main' }}>
-                        Add Note
+                        {t('preview.content.cta')}
                       </Button>
                     </Box>
-                    
+
                     <Box sx={{
                       display: 'grid',
                       gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
                       gap: DIMENSIONS.spacing.small
                     }}>
-                      {/* Note cards */}
                       {[
-                        { title: 'Project Ideas', content: 'Build a SaaS starter kit...', date: '2 hours ago' },
-                        { title: 'Meeting Notes', content: 'Discuss new features...', date: '1 day ago' },
-                        { title: 'Todo List', content: 'Implement authentication...', date: '3 days ago' }
+                        { title: t('preview.content.cards.ideaTitle'), content: t('preview.content.cards.ideaBody'), date: t('preview.content.cards.recent') },
+                        { title: t('preview.content.cards.meetingTitle'), content: t('preview.content.cards.meetingBody'), date: t('preview.content.cards.yesterday') },
+                        { title: t('preview.content.cards.todoTitle'), content: t('preview.content.cards.todoBody'), date: t('preview.content.cards.daysAgo') }
                       ].map((note, index) => (
                         <Card key={index} sx={{ p: DIMENSIONS.spacing.small, cursor: 'pointer', '&:hover': { bgcolor: 'grey.50' } }}>
                           <Typography variant="h6" fontWeight="bold" sx={{ mb: 1 }}>

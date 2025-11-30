@@ -1,17 +1,22 @@
+"use client";
+
 import React from 'react';
 import { Typography, Box, Container } from '@mui/material';
 import TerminalMockup from 'components/Public/TerminalMockup/TerminalMockup';
 import CTAButtons from 'components/Public/CTAButtons/CTAButtons';
 import { DIMENSIONS } from 'constants/landing';
+import { useI18n } from 'context/I18nContext';
 
 /**
  * HeroSection component
  */
 const HeroSection = () => {
+  const { t } = useI18n();
+
   return (
     <Box component="section" bgcolor="background.default" py={DIMENSIONS.spacing.section} aria-labelledby="hero-title">
       <Container maxWidth="lg">
-        <Box sx={{ 
+        <Box sx={{
           position: 'relative',
           display: 'flex',
           flexDirection: { xs: 'column', lg: 'row' },
@@ -22,9 +27,9 @@ const HeroSection = () => {
           <Box component="aside" aria-label="Code example" sx={{ order: { xs: 1, lg: 2 } }}>
             <TerminalMockup />
           </Box>
-          
+
           {/* Main hero content */}
-          <Box component="header" sx={{ 
+          <Box component="header" sx={{
             order: { xs: 2, lg: 1 },
             flex: 1,
             minWidth: 0,

@@ -43,7 +43,7 @@ console.log(
 export function createThemeFromConfig(
   themeName: string,
   mode: PaletteMode,
-  options?: { cssVariables?: boolean }
+  options?: { cssVariables?: boolean; direction?: 'ltr' | 'rtl' }
 ) {
   const config = themeRegistry[themeName];
 
@@ -66,6 +66,7 @@ export function createThemeFromConfig(
     typography: config.typography,
     components: config.components,
     cssVariables: options?.cssVariables || false,
+    direction: options?.direction,
   });
 }
 

@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import { Typography, Box, Container, Stack, Card, CardContent } from '@mui/material';
 import DomainAddIcon from '@mui/icons-material/DomainAdd';
@@ -10,6 +12,7 @@ import SensorDoorIcon from '@mui/icons-material/SensorDoor';
 import InsightsIcon from '@mui/icons-material/Insights';
 import HubIcon from '@mui/icons-material/Hub';
 import { FEATURES, DIMENSIONS } from 'constants/landing';
+import { useI18n } from 'context/I18nContext';
 
 const featureIcons = {
   'Multi-compound command center': <DomainAddIcon sx={{ fontSize: DIMENSIONS.iconSize.large, color: FEATURES[0].color }} />,
@@ -27,6 +30,8 @@ const featureIcons = {
  * FeatureCards component
  */
 const FeatureCards = () => {
+  const { t } = useI18n();
+
   return (
     <Box component="section" py={DIMENSIONS.spacing.section} bgcolor="background.default" aria-labelledby="features-title">
       <Container maxWidth="lg">
@@ -52,8 +57,8 @@ const FeatureCards = () => {
               <Card component="article" key={idx} role="gridcell" sx={{ height: '100%' }}>
                 <CardContent>
                   <Stack spacing={DIMENSIONS.spacing.stack} alignItems="center" textAlign="center">
-                    <Box sx={{ 
-                      display: 'flex', 
+                    <Box sx={{
+                      display: 'flex',
                       alignItems: 'center', 
                       justifyContent: 'center',
                       width: DIMENSIONS.iconContainer.width,
@@ -63,15 +68,15 @@ const FeatureCards = () => {
                       border: '1px solid',
                       borderColor: 'divider'
                     }}>
-                      {featureIcons[feature.title as keyof typeof featureIcons]}
+                      {featureIcons[feature.key as keyof typeof featureIcons]}
                     </Box>
                     <Box component="header">
                       <Typography variant="h6" component="h4" fontWeight="bold">
-                        {feature.title}
+                        {t(`features.${feature.key}.title`)}
                       </Typography>
                     </Box>
                     <Typography variant="body2" color="text.secondary">
-                      {feature.description}
+                      {t(`features.${feature.key}.description`)}
                     </Typography>
                   </Stack>
                 </CardContent>

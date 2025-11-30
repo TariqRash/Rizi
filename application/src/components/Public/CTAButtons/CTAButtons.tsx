@@ -1,14 +1,19 @@
+"use client";
+
 import React from 'react';
 import { Button, Stack } from '@mui/material';
 import Link from 'next/link';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import { COLORS, URLS, DIMENSIONS } from 'constants/landing';
+import { useI18n } from 'context/I18nContext';
 
 /**
  * CTAButtons component
  */
 const CTAButtons = () => {
+  const { t } = useI18n();
+
   return (
     <Stack direction={{ xs: 'column', sm: 'row' }} spacing={DIMENSIONS.spacing.small} justifyContent="center">
       <Button

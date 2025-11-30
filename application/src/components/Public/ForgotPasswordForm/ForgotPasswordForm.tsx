@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Card, CardContent, TextField, Typography, Box, Button } from '@mui/material';
 import FormButton from 'components/Public/FormButton/FormButton';
 import { useNavigating } from 'hooks/navigation';
+import { useI18n } from 'context/I18nContext';
 
 /**
  * Forgot Password form.
@@ -15,6 +16,7 @@ const ForgotPasswordForm: React.FC = () => {
   const [success, setSuccess] = useState<string | null>(null);
   const [magicLinkSuccess, setMagicLinkSuccess] = useState<string | null>(null);
   const { setNavigating } = useNavigating();
+  const { t } = useI18n();
 
   const handleSubmit = async (e: React.FormEvent) => {
     setNavigating(true);
@@ -30,14 +32,13 @@ const ForgotPasswordForm: React.FC = () => {
       });
       const data = await res.json();
       if (!res.ok || data.error) {
-        setError(data.error || 'Something went wrong, please try again later.');
+        setError(data.error || t('auth.signup.genericError'));
       } else {
-        setSuccess('If your email exists in our system, a reset link has been sent.');
+        setSuccess(t('auth.forgot.subtitle'));
       }
     } catch (err) {
       setError(
-        'Something went wrong, please try again later.' +
-          (err instanceof Error ? `: ${err.message}` : '')
+        t('auth.signup.genericError') + (err instanceof Error ? `: ${err.message}` : '')
       );
     } finally {
       setNavigating(false);
@@ -56,14 +57,13 @@ const ForgotPasswordForm: React.FC = () => {
       });
       const data = await res.json();
       if (!res.ok || data.error) {
-        setError(data.error || 'Something went wrong, please try again later.');
+        setError(data.error || t('auth.signup.genericError'));
       } else {
-        setMagicLinkSuccess('Magic link sent! Please check your email inbox.');
+        setMagicLinkSuccess(t('auth.magic.subtitle'));
       }
     } catch (err) {
       setError(
-        'Something went wrong, please try again later.' +
-          (err instanceof Error ? `: ${err.message}` : '')
+        t('auth.signup.genericError') + (err instanceof Error ? `: ${err.message}` : '')
       );
     } finally {
       setNavigating(false);
@@ -75,10 +75,10 @@ const ForgotPasswordForm: React.FC = () => {
       <Card sx={{ width: '100%', maxWidth: 400 }}>
         <Box display="flex" flexDirection="column" gap={1.5} p={3}>
           <Typography fontWeight="bold" variant="h5">
-            Forgot your password?
+            {t('auth.forgot.title')}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Enter your email and we will send you a link to reset your password.
+            {t('auth.forgot.subtitle')}
           </Typography>
         </Box>
         <CardContent sx={{ p: 3, pt: 0, pb: 1 }}>
@@ -86,12 +86,12 @@ const ForgotPasswordForm: React.FC = () => {
             <Box display="grid" gap={2}>
               <Box display="flex" flexDirection="column" gap={1}>
                 <label htmlFor="email" style={{ fontSize: 14, lineHeight: 1.5 }}>
-                  Email
+                  {t('auth.forgot.email')}
                 </label>
                 <TextField
                   id="email"
                   type="email"
-                  placeholder="Enter your email"
+                  placeholder={t('auth.forgot.emailPlaceholder')}
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -118,7 +118,7 @@ const ForgotPasswordForm: React.FC = () => {
             )}
 
             <Box mt={3} display="flex" flexDirection="column" gap={2}>
-              <FormButton>Reset Password</FormButton>
+              <FormButton>{t('auth.forgot.submit')}</FormButton>
               <Button
                 type="button"
                 onClick={handleMagicLink}
@@ -127,7 +127,7 @@ const ForgotPasswordForm: React.FC = () => {
                 size="large"
                 sx={{ textTransform: 'none' }}
               >
-                Send Magic Link
+                {t('auth.magic.title')}
               </Button>
             </Box>
           </form>

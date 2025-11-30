@@ -21,6 +21,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { useSession, signOut } from 'next-auth/react';
 import ServiceWarningIndicator from 'components/Common/ServiceWarningIndicator/ServiceWarningIndicator';
 import { usePathname } from 'next/navigation';
+import { useI18n } from 'context/I18nContext';
 
 /**
  * Main navigation bar of the application.
@@ -32,6 +33,7 @@ const NavBar = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
+  const { t, locale, setLocale } = useI18n();
 
   const isSystemStatusPage = pathname === '/system-status';
 
@@ -45,14 +47,18 @@ const NavBar = () => {
 
   const navLinks = session
     ? [
-        { href: '/pricing', label: 'Pricing' },
-        { href: '#', label: 'Sign out', onClick: handleLogout },
+        { href: '/pricing', label: t('nav.pricing') },
+        { href: '#', label: t('nav.signout'), onClick: handleLogout },
       ]
     : [
-        { href: '/pricing', label: 'Pricing' },
-        { href: '/login', label: 'Log in' },
-        { href: '/signup', label: 'Sign up' },
+        { href: '/pricing', label: t('nav.pricing') },
+        { href: '/login', label: t('nav.login') },
+        { href: '/signup', label: t('nav.signup') },
       ];
+
+  const handleLanguageToggle = () => {
+    setLocale(locale === 'ar' ? 'en' : 'ar');
+  };
   const drawer = (
     <Box
       sx={{
@@ -66,6 +72,15 @@ const NavBar = () => {
       <List disablePadding>
         {!isSystemStatusPage ? <ServiceWarningIndicator /> : null}
 
+        <ListItem disablePadding sx={{ borderBottom: `1px solid ${theme.palette.divider}` }}>
+          <ListItemButton onClick={handleLanguageToggle} sx={{ justifyContent: 'space-between' }}>
+            <ListItemText primary={t('nav.language')} />
+            <Typography variant="body2" color="text.secondary">
+              {locale === 'ar' ? t('languageSwitcher.arabic') : t('languageSwitcher.english')}
+            </Typography>
+          </ListItemButton>
+        </ListItem>
+
         {navLinks.map(({ href, label, onClick }) => (
           <ListItem
             key={label}
@@ -77,8 +92,8 @@ const NavBar = () => {
             <ListItemButton component={Link} href={href} onClick={onClick}>
               <ListItemText primary={label} />
             </ListItemButton>
-          </ListItem>
-        ))}
+            </ListItem>
+          ))}
       </List>
     </Box>
   );
@@ -102,7 +117,7 @@ const NavBar = () => {
               fontWeight={700}
               sx={{ cursor: 'pointer' }}
             >
-              🐳 SeaNotes
+              🐳 {t('nav.brand')}
             </Typography>
           </Link>
 
@@ -131,13 +146,21 @@ const NavBar = () => {
                   {label}
                 </Button>
               ))}
+              <Button
+                onClick={handleLanguageToggle}
+                variant="outlined"
+                size="small"
+                sx={{ ml: 2 }}
+              >
+                {locale === 'ar' ? t('languageSwitcher.english') : t('languageSwitcher.arabic')}
+              </Button>
             </Box>
           )}
         </Toolbar>
       </AppBar>
 
       <Drawer
-        anchor="right"
+        anchor={theme.direction === 'rtl' ? 'left' : 'right'}
         open={mobileOpen}
         onClose={handleDrawerToggle}
         ModalProps={{ keepMounted: true }}

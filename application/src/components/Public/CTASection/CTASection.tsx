@@ -1,12 +1,17 @@
+"use client";
+
 import React from 'react';
 import { Typography, Box, Container, Stack } from '@mui/material';
 import CTAButtons from 'components/Public/CTAButtons/CTAButtons';
 import { DIMENSIONS } from 'constants/landing';
+import { useI18n } from 'context/I18nContext';
 
 /**
  * CTASection component
  */
 const CTASection = () => {
+  const { t } = useI18n();
+
   return (
     <Box component="section" py={DIMENSIONS.spacing.section} bgcolor="grey.50" aria-labelledby="cta-title">
       <Container maxWidth="md">
