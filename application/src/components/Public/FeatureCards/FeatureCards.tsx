@@ -1,26 +1,26 @@
 import React from 'react';
 import { Typography, Box, Container, Stack, Card, CardContent } from '@mui/material';
-import StorageIcon from '@mui/icons-material/Storage';
-import PaymentIcon from '@mui/icons-material/Payment';
-import SecurityIcon from '@mui/icons-material/Security';
-import CloudIcon from '@mui/icons-material/Cloud';
-import EmailIcon from '@mui/icons-material/Email';
-import PsychologyIcon from '@mui/icons-material/Psychology';
-import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
-import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
-import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
+import DomainAddIcon from '@mui/icons-material/DomainAdd';
+import HandshakeIcon from '@mui/icons-material/Handshake';
+import TranslateIcon from '@mui/icons-material/Translate';
+import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
+import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
+import EventAvailableIcon from '@mui/icons-material/EventAvailable';
+import SensorDoorIcon from '@mui/icons-material/SensorDoor';
+import InsightsIcon from '@mui/icons-material/Insights';
+import HubIcon from '@mui/icons-material/Hub';
 import { FEATURES, DIMENSIONS } from 'constants/landing';
 
 const featureIcons = {
-  'One-Click Deployment': <RocketLaunchIcon sx={{ fontSize: DIMENSIONS.iconSize.large, color: FEATURES[0].color }} />,
-  'DigitalOcean Spaces': <CloudIcon sx={{ fontSize: DIMENSIONS.iconSize.large, color: FEATURES[1].color }} />,
-  'DigitalOcean Gradient': <PsychologyIcon sx={{ fontSize: DIMENSIONS.iconSize.large, color: FEATURES[2].color }} />,
-  'PostgreSQL and Prisma ORM': <StorageIcon sx={{ fontSize: DIMENSIONS.iconSize.large, color: FEATURES[3].color }} />,
-  'Stripe Integration': <PaymentIcon sx={{ fontSize: DIMENSIONS.iconSize.large, color: FEATURES[4].color }} />,
-  'NextAuth Authentication': <SecurityIcon sx={{ fontSize: DIMENSIONS.iconSize.large, color: FEATURES[5].color }} />,
-  'Resend Email Service': <EmailIcon sx={{ fontSize: DIMENSIONS.iconSize.large, color: FEATURES[6].color }} />,
-  'Admin Dashboard': <AdminPanelSettingsIcon sx={{ fontSize: DIMENSIONS.iconSize.large, color: FEATURES[7].color }} />,
-  'System Health Monitoring': <MonitorHeartIcon sx={{ fontSize: DIMENSIONS.iconSize.large, color: FEATURES[8].color }} />,
+  'Multi-compound command center': <DomainAddIcon sx={{ fontSize: DIMENSIONS.iconSize.large, color: FEATURES[0].color }} />,
+  'Resident & services workflows': <HandshakeIcon sx={{ fontSize: DIMENSIONS.iconSize.large, color: FEATURES[1].color }} />,
+  'Arabic-first experience': <TranslateIcon sx={{ fontSize: DIMENSIONS.iconSize.large, color: FEATURES[2].color }} />,
+  'Smart ticketing & SLAs': <AssignmentTurnedInIcon sx={{ fontSize: DIMENSIONS.iconSize.large, color: FEATURES[3].color }} />,
+  'Billing & collections': <ReceiptLongIcon sx={{ fontSize: DIMENSIONS.iconSize.large, color: FEATURES[4].color }} />,
+  'Vendor scheduling & dispatch': <EventAvailableIcon sx={{ fontSize: DIMENSIONS.iconSize.large, color: FEATURES[5].color }} />,
+  'Access & amenities control': <SensorDoorIcon sx={{ fontSize: DIMENSIONS.iconSize.large, color: FEATURES[6].color }} />,
+  'Analytics & compliance': <InsightsIcon sx={{ fontSize: DIMENSIONS.iconSize.large, color: FEATURES[7].color }} />,
+  'Open API & webhooks': <HubIcon sx={{ fontSize: DIMENSIONS.iconSize.large, color: FEATURES[8].color }} />,
 };
 
 /**
@@ -33,7 +33,7 @@ const FeatureCards = () => {
         <Stack spacing={DIMENSIONS.spacing.card}>
           <Box component="header">
             <Typography variant="h4" component="h3" id="features-title" fontWeight="bold" textAlign="center">
-              What&apos;s included
+              Rizi benefits | مزايا ريزي
             </Typography>
           </Box>
           <Box

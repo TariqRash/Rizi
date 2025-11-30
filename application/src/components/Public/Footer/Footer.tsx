@@ -1,44 +1,42 @@
 import React from 'react';
 import Link from 'next/link';
 import { Box, Container, Typography, Stack, useTheme } from '@mui/material';
-import GitHubIcon from '@mui/icons-material/GitHub';
 import LaunchIcon from '@mui/icons-material/Launch';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
-import CloudIcon from '@mui/icons-material/Cloud';
-import StorageIcon from '@mui/icons-material/Storage';
-import DatabaseIcon from '@mui/icons-material/Storage';
-import PsychologyIcon from '@mui/icons-material/Psychology';
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import HomeWorkIcon from '@mui/icons-material/HomeWork';
+import HomeRepairServiceIcon from '@mui/icons-material/HomeRepairService';
+import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 import SupportIcon from '@mui/icons-material/Support';
-import TwitterIcon from '@mui/icons-material/Twitter';
 import ForumIcon from '@mui/icons-material/Forum';
 import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
 import { URLS, DIMENSIONS } from 'constants/landing';
 
 const footerSections = [
   {
-    title: 'Product & Code',
+    title: 'Rizi platform',
     links: [
-      { label: 'GitHub Repository', href: URLS.githubRepo, icon: <GitHubIcon sx={{ fontSize: DIMENSIONS.iconSize.small }} /> },
+      { label: 'Visit rizi.sa', href: URLS.marketingSite, icon: <LaunchIcon sx={{ fontSize: DIMENSIONS.iconSize.small }} /> },
       { label: 'Documentation', href: URLS.documentation, icon: <MenuBookIcon sx={{ fontSize: DIMENSIONS.iconSize.small }} /> },
-      { label: 'Live Demo', href: '#', icon: <LaunchIcon sx={{ fontSize: DIMENSIONS.iconSize.small }} /> },
+      { label: 'Book a demo', href: URLS.demo, icon: <CalendarTodayIcon sx={{ fontSize: DIMENSIONS.iconSize.small }} /> },
+      { label: 'Arabic product deck', href: URLS.arabicDeck, icon: <PictureAsPdfIcon sx={{ fontSize: DIMENSIONS.iconSize.small }} /> },
     ],
   },
   {
-    title: 'DigitalOcean Services',
+    title: 'Operations workflows',
     links: [
-      { label: 'App Platform', href: URLS.appPlatform, icon: <CloudIcon sx={{ fontSize: DIMENSIONS.iconSize.small }} /> },
-      { label: 'Spaces Storage', href: URLS.spaces, icon: <StorageIcon sx={{ fontSize: DIMENSIONS.iconSize.small }} /> },
-      { label: 'Managed Databases', href: URLS.databases, icon: <DatabaseIcon sx={{ fontSize: DIMENSIONS.iconSize.small }} /> },
-      { label: 'Gradient', href: URLS.gradient, icon: <PsychologyIcon sx={{ fontSize: DIMENSIONS.iconSize.small }} /> },
+      { label: 'Multi-compound control', href: `${URLS.marketingSite}/platform`, icon: <HomeWorkIcon sx={{ fontSize: DIMENSIONS.iconSize.small }} /> },
+      { label: 'Resident & vendor app', href: `${URLS.marketingSite}/workflows`, icon: <HomeRepairServiceIcon sx={{ fontSize: DIMENSIONS.iconSize.small }} /> },
+      { label: 'Tickets, SLAs & billing', href: `${URLS.marketingSite}/operations`, icon: <AssignmentTurnedInIcon sx={{ fontSize: DIMENSIONS.iconSize.small }} /> },
     ],
   },
   {
-    title: 'Support & Community',
+    title: 'Support & language',
     links: [
-      { label: 'DigitalOcean Support', href: URLS.support, icon: <SupportIcon sx={{ fontSize: DIMENSIONS.iconSize.small }} /> },
-      { label: 'DigitalOcean Twitter', href: URLS.twitter, icon: <TwitterIcon sx={{ fontSize: DIMENSIONS.iconSize.small }} /> },
-      { label: 'Community Forum', href: URLS.community, icon: <ForumIcon sx={{ fontSize: DIMENSIONS.iconSize.small }} /> },
-      { label: 'Status Page', href: URLS.status, icon: <MonitorHeartIcon sx={{ fontSize: DIMENSIONS.iconSize.small }} /> },
+      { label: 'Contact Rizi', href: URLS.contact, icon: <SupportIcon sx={{ fontSize: DIMENSIONS.iconSize.small }} /> },
+      { label: 'Product updates', href: `${URLS.marketingSite}/blog`, icon: <ForumIcon sx={{ fontSize: DIMENSIONS.iconSize.small }} /> },
+      { label: 'Status & reliability', href: `${URLS.marketingSite}/status`, icon: <MonitorHeartIcon sx={{ fontSize: DIMENSIONS.iconSize.small }} /> },
     ],
   },
 ];
@@ -106,10 +104,10 @@ export default function Footer() {
             </Box>
           ))}
         </Box>
-        
+
         <Box sx={{ pt: DIMENSIONS.spacing.container, borderTop: `1px solid ${theme.palette.divider}`, textAlign: 'center' }}>
           <Typography variant="body2" color="text.secondary">
-            © 2025 SeaNotes. Built with ❤️ using DigitalOcean services.
+            © 2025 Rizi. Built for multi-compound living across the Gulf.
           </Typography>
         </Box>
       </Container>
