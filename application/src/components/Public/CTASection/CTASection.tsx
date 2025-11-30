@@ -16,7 +16,8 @@ const CTASection = () => {
               Bring every compound into Rizi | جرّب ريزي لكل مجمع
             </Typography>
             <Typography variant="h6" color="text.secondary">
-              Show residents, operators, and vendors what Arabic-first property operations feels like. Centralize requests, access, billing, and reporting while keeping your teams in sync.
+              Show residents, operators, vendors, and owners what Arabic-first property operations feels like. Centralize requests,
+              access, billing, and reporting while keeping your teams in sync.
             </Typography>
           </Box>
           <Box component="nav" aria-label="Get started actions">

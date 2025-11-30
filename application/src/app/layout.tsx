@@ -35,8 +35,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'SeaNotes',
-  description: 'SeaNotes - A SaaS Starter Kit note-taking app from DigitalOcean',
+  title: 'Rizi | Multi-compound operations OS',
+  description: 'Rizi unifies resident services, vendor dispatch, billing, and access control for compounds and towers across the Gulf.',
 };
 
 /**

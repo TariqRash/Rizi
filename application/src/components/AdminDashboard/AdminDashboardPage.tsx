@@ -1,12 +1,12 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import { Box, Typography, CardContent, CardHeader, CircularProgress } from '@mui/material';
+import React, { useEffect, useMemo, useState } from 'react';
+import { Box, Typography, CardContent, CardHeader, CircularProgress, Card, Divider, Stack } from '@mui/material';
 import PageContainer from '../Common/PageContainer/PageContainer';
 import { UsersClient } from '../../lib/api/users';
-import { UserWithSubscriptions } from '../../types';
+import { SubscriptionPlanEnum, SubscriptionStatusEnum, UserWithSubscriptions } from '../../types';
 import Toast from 'components/Common/Toast/Toast';
-import { USER_ROLES } from '../../lib/auth/roles';
+import { SUPER_ADMIN_EMAIL, USER_ROLES } from '../../lib/auth/roles';
 import { useSession } from 'next-auth/react';
 import UserTable from './UserTable/UserTable';
 import EditUserDialog from './EditUserDialog/EditUserDialog';
@@ -118,9 +118,27 @@ export default function AdminDashboard() {
 
   // Add this function inside your AdminDashboard component
   const handleAdminSwitchChange = async (user: UserWithSubscriptions, checked: boolean) => {
+    if (user.role === USER_ROLES.SUPER_ADMIN) {
+      setToast({ open: true, message: 'Super admin access is locked for security.', severity: 'info' });
+      return;
+    }
     setSelectedUser(user);
     await updateUser(user.id, { role: checked ? USER_ROLES.ADMIN : USER_ROLES.USER });
   };
+
+  const summaryStats = useMemo(() => {
+    const totalUsersCount = users.length;
+    const adminCount = users.filter((u) => u.role === USER_ROLES.ADMIN || u.role === USER_ROLES.SUPER_ADMIN).length;
+    const proPlans = users.filter((u) => u.subscription?.plan === SubscriptionPlanEnum.PRO).length;
+    const activeSubs = users.filter((u) => u.subscription?.status === SubscriptionStatusEnum.ACTIVE).length;
+
+    return {
+      totalUsersCount,
+      adminCount,
+      proPlans,
+      activeSubs,
+    };
+  }, [users]);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -149,12 +167,44 @@ export default function AdminDashboard() {
     <PageContainer title="Admin Dashboard">
       <CardHeader
         title={
-          <Typography variant="h6" fontWeight="bold">
-            User Management
-          </Typography>
+          <Stack direction="row" alignItems="center" justifyContent="space-between" flexWrap="wrap" gap={2}>
+            <Typography variant="h6" fontWeight="bold">
+              Superadmin control | إدارة المشرف العام
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Signed-in super admin: {SUPER_ADMIN_EMAIL}
+            </Typography>
+          </Stack>
         }
+        subheader="Monitor tenants, admins, subscriptions, and access from one dashboard."
       />
+      <CardContent>
+        <Box
+          display="grid"
+          gridTemplateColumns={{ xs: 'repeat(auto-fit, minmax(220px, 1fr))' }}
+          gap={2}
+          mb={2}
+        >
+          {[
+            { label: 'Total users', value: summaryStats.totalUsersCount },
+            { label: 'Admins & super admins', value: summaryStats.adminCount },
+            { label: 'Active subscriptions', value: summaryStats.activeSubs },
+            { label: 'Pro plan tenants', value: summaryStats.proPlans },
+          ].map((stat) => (
+            <Card key={stat.label} variant="outlined">
+              <CardContent>
+                <Typography variant="caption" color="text.secondary">{stat.label}</Typography>
+                <Typography variant="h5" fontWeight={700}>{stat.value}</Typography>
+              </CardContent>
+            </Card>
+          ))}
+        </Box>
+        <Divider sx={{ mb: 3 }} />
+      </CardContent>
       <CardContent sx={{ pt: 0 }}>
+        <Typography variant="h6" fontWeight="bold" sx={{ mb: 2 }}>
+          User Management
+        </Typography>
         <UserFilterControls
           searchName={searchName}
           setSearchName={setSearchName}
