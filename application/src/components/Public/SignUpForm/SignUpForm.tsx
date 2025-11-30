@@ -15,6 +15,7 @@ import Link from 'next/link';
 import FormButton from 'components/Public/FormButton/FormButton';
 import { useNavigating } from 'hooks/navigation';
 import { USER_ROLES } from 'lib/auth/roles';
+import { useI18n } from 'context/I18nContext';
 
 /**
  * User registration form.
@@ -22,6 +23,7 @@ import { USER_ROLES } from 'lib/auth/roles';
  */
 const SignUpForm: React.FC = () => {
   const { setNavigating } = useNavigating();
+  const { t } = useI18n();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -35,7 +37,7 @@ const SignUpForm: React.FC = () => {
     setSuccess(null);
 
     if (password !== confirmPassword) {
-      setError('Passwords do not match.');
+      setError(t('auth.signup.mismatch'));
       return;
     }
 
@@ -48,13 +50,13 @@ const SignUpForm: React.FC = () => {
       });
       const data = await res.json();
       if (!res.ok || data.error) {
-        setError(data.error || 'Something went wrong');
+        setError(data.error || t('auth.signup.generic'));
       } else {
-        setSuccess(data.message || 'Account created.');
+        setSuccess(data.message || t('auth.signup.success'));
       }
     } catch (err) {
       console.error('Signup error:', err);
-      setError('Something went wrong during signup. Please try again later.');
+      setError(t('auth.signup.genericError'));
     }
     setNavigating(false);
   };
@@ -74,10 +76,10 @@ const SignUpForm: React.FC = () => {
               {/* Header */}
               <Stack spacing={1.5} textAlign="center">
                 <Typography variant="h4" component="h1">
-                  Create Account
+                  {t('auth.signup.title')}
                 </Typography>
                 <Typography variant="body1" color="text.secondary">
-                  Sign up to get started with your account
+                  {t('auth.signup.subtitle')}
                 </Typography>
               </Stack>
 
@@ -98,13 +100,13 @@ const SignUpForm: React.FC = () => {
                   <Stack spacing={3}>
                     <Stack spacing={1}>
                       <Typography variant="body2" fontWeight={500} color="text.primary">
-                        Email
+                        {t('auth.signup.email')}
                       </Typography>
                       <TextField
                         id="email"
                         name="email"
                         type="email"
-                        placeholder="Enter your email"
+                        placeholder={t('auth.signup.emailPlaceholder')}
                         required
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
@@ -117,13 +119,13 @@ const SignUpForm: React.FC = () => {
 
                     <Stack spacing={1}>
                       <Typography variant="body2" fontWeight={500} color="text.primary">
-                        Password
+                        {t('auth.signup.password')}
                       </Typography>
                       <TextField
                         id="password"
                         name="password"
                         type="password"
-                        placeholder="Enter your password"
+                        placeholder={t('auth.signup.passwordPlaceholder')}
                         required
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
@@ -136,13 +138,13 @@ const SignUpForm: React.FC = () => {
 
                     <Stack spacing={1}>
                       <Typography variant="body2" fontWeight={500} color="text.primary">
-                        Confirm Password
+                        {t('auth.signup.confirmPassword')}
                       </Typography>
                       <TextField
                         id="confirm-password"
                         name="confirmPassword"
                         type="password"
-                        placeholder="Confirm your password"
+                        placeholder={t('auth.signup.confirmPasswordPlaceholder')}
                         required
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
@@ -153,32 +155,32 @@ const SignUpForm: React.FC = () => {
                       />
                     </Stack>
 
-                    {error && (
-                      <Typography
-                        color="error"
-                        variant="body2"
-                        textAlign="center"
-                        data-testid="signup-error-message"
-                      >
-                        {error}
-                      </Typography>
-                    )}
+                  {error && (
+                    <Typography
+                      color="error"
+                      variant="body2"
+                      textAlign="center"
+                      data-testid="signup-error-message"
+                    >
+                      {error}
+                    </Typography>
+                  )}
 
-                    <Box mt={1}>
-                      <FormButton>Create Account</FormButton>
-                    </Box>
-                  </Stack>
-                </Box>
+                  <Box mt={1}>
+                    <FormButton>{t('auth.signup.submit')}</FormButton>
+                  </Box>
+                </Stack>
+              </Box>
               )}
 
               {/* Links */}
               <Stack spacing={2} alignItems="center">
                 <Stack direction="row" spacing={0.5} alignItems="center" justifyContent="center">
                   <Typography variant="body2" color="text.secondary">
-                    Already have an account?
+                    {t('auth.signup.already')}
                   </Typography>
                   <MuiLink component={Link} href="/login" variant="body2" sx={{ fontWeight: 600 }}>
-                    Sign in
+                    {t('auth.signup.signin')}
                   </MuiLink>
                 </Stack>
               </Stack>

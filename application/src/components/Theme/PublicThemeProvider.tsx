@@ -1,6 +1,9 @@
+"use client";
+
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { useMemo } from 'react';
+import { useI18n } from 'context/I18nContext';
 import { createThemeFromConfig } from './ThemeRegistry';
 
 /**
@@ -18,9 +21,10 @@ import { createThemeFromConfig } from './ThemeRegistry';
  * - Optimized for public-facing pages
  */
 export default function PublicThemeProvider({ children }: { children: React.ReactNode }) {
+  const { direction } = useI18n();
   const publicTheme = useMemo(
-    () => createThemeFromConfig('sky', 'light', { cssVariables: true }),
-    []
+    () => createThemeFromConfig('sky', 'light', { cssVariables: true, direction }),
+    [direction]
   );
 
   return (

@@ -96,48 +96,39 @@ export const TERMINAL = {
 // Feature Data
 export const FEATURES = [
   {
-    title: 'One-Click Deployment',
-    description: 'Deploy directly to DigitalOcean App Platform with automated setup and configuration.',
+    key: 'oneClickDeployment',
     color: COLORS.deployment,
   },
   {
-    title: 'DigitalOcean Spaces',
-    description: 'File storage and CDN integration using DigitalOcean Spaces.',
+    key: 'spaces',
     color: COLORS.cloud,
   },
   {
-    title: 'DigitalOcean Gradient',
-    description: 'AI-powered invoice generation using DigitalOcean\'s Serverless Inference API.',
+    key: 'gradient',
     color: COLORS.ai,
   },
   {
-    title: 'PostgreSQL and Prisma ORM',
-    description: 'Database used for efficient data management and scalability.',
+    key: 'database',
     color: COLORS.database,
   },
   {
-    title: 'Stripe Integration',
-    description: 'Used for subscription management.',
+    key: 'stripe',
     color: COLORS.payment,
   },
   {
-    title: 'NextAuth Authentication',
-    description: 'Built-in authentication system for better user management.',
+    key: 'auth',
     color: COLORS.security,
   },
   {
-    title: 'Resend Email Service',
-    description: 'Email service used for sending authentication emails as well as invoices.',
+    key: 'email',
     color: COLORS.email,
   },
   {
-    title: 'Admin Dashboard',
-    description: 'Complete admin interface for managing users, subscriptions, and system monitoring.',
+    key: 'admin',
     color: COLORS.admin,
   },
   {
-    title: 'System Health Monitoring',
-    description: 'Real-time monitoring of all services including database, email, storage, and AI services.',
+    key: 'monitoring',
     color: COLORS.monitoring,
   },
 ] as const;

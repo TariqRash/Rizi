@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import { Typography, Box, Container, Stack, Card, CardContent } from '@mui/material';
 import StorageIcon from '@mui/icons-material/Storage';
@@ -10,30 +12,33 @@ import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
 import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
 import { FEATURES, DIMENSIONS } from 'constants/landing';
+import { useI18n } from 'context/I18nContext';
 
 const featureIcons = {
-  'One-Click Deployment': <RocketLaunchIcon sx={{ fontSize: DIMENSIONS.iconSize.large, color: FEATURES[0].color }} />,
-  'DigitalOcean Spaces': <CloudIcon sx={{ fontSize: DIMENSIONS.iconSize.large, color: FEATURES[1].color }} />,
-  'DigitalOcean Gradient': <PsychologyIcon sx={{ fontSize: DIMENSIONS.iconSize.large, color: FEATURES[2].color }} />,
-  'PostgreSQL and Prisma ORM': <StorageIcon sx={{ fontSize: DIMENSIONS.iconSize.large, color: FEATURES[3].color }} />,
-  'Stripe Integration': <PaymentIcon sx={{ fontSize: DIMENSIONS.iconSize.large, color: FEATURES[4].color }} />,
-  'NextAuth Authentication': <SecurityIcon sx={{ fontSize: DIMENSIONS.iconSize.large, color: FEATURES[5].color }} />,
-  'Resend Email Service': <EmailIcon sx={{ fontSize: DIMENSIONS.iconSize.large, color: FEATURES[6].color }} />,
-  'Admin Dashboard': <AdminPanelSettingsIcon sx={{ fontSize: DIMENSIONS.iconSize.large, color: FEATURES[7].color }} />,
-  'System Health Monitoring': <MonitorHeartIcon sx={{ fontSize: DIMENSIONS.iconSize.large, color: FEATURES[8].color }} />,
+  oneClickDeployment: <RocketLaunchIcon sx={{ fontSize: DIMENSIONS.iconSize.large, color: FEATURES[0].color }} />, 
+  spaces: <CloudIcon sx={{ fontSize: DIMENSIONS.iconSize.large, color: FEATURES[1].color }} />, 
+  gradient: <PsychologyIcon sx={{ fontSize: DIMENSIONS.iconSize.large, color: FEATURES[2].color }} />, 
+  database: <StorageIcon sx={{ fontSize: DIMENSIONS.iconSize.large, color: FEATURES[3].color }} />, 
+  stripe: <PaymentIcon sx={{ fontSize: DIMENSIONS.iconSize.large, color: FEATURES[4].color }} />, 
+  auth: <SecurityIcon sx={{ fontSize: DIMENSIONS.iconSize.large, color: FEATURES[5].color }} />, 
+  email: <EmailIcon sx={{ fontSize: DIMENSIONS.iconSize.large, color: FEATURES[6].color }} />, 
+  admin: <AdminPanelSettingsIcon sx={{ fontSize: DIMENSIONS.iconSize.large, color: FEATURES[7].color }} />, 
+  monitoring: <MonitorHeartIcon sx={{ fontSize: DIMENSIONS.iconSize.large, color: FEATURES[8].color }} />,
 };
 
 /**
  * FeatureCards component
  */
 const FeatureCards = () => {
+  const { t } = useI18n();
+
   return (
     <Box component="section" py={DIMENSIONS.spacing.section} bgcolor="background.default" aria-labelledby="features-title">
       <Container maxWidth="lg">
         <Stack spacing={DIMENSIONS.spacing.card}>
           <Box component="header">
             <Typography variant="h4" component="h3" id="features-title" fontWeight="bold" textAlign="center">
-              What&apos;s included
+              {t('features.headline')}
             </Typography>
           </Box>
           <Box
@@ -52,8 +57,8 @@ const FeatureCards = () => {
               <Card component="article" key={idx} role="gridcell" sx={{ height: '100%' }}>
                 <CardContent>
                   <Stack spacing={DIMENSIONS.spacing.stack} alignItems="center" textAlign="center">
-                    <Box sx={{ 
-                      display: 'flex', 
+                    <Box sx={{
+                      display: 'flex',
                       alignItems: 'center', 
                       justifyContent: 'center',
                       width: DIMENSIONS.iconContainer.width,
@@ -63,15 +68,15 @@ const FeatureCards = () => {
                       border: '1px solid',
                       borderColor: 'divider'
                     }}>
-                      {featureIcons[feature.title as keyof typeof featureIcons]}
+                      {featureIcons[feature.key as keyof typeof featureIcons]}
                     </Box>
                     <Box component="header">
                       <Typography variant="h6" component="h4" fontWeight="bold">
-                        {feature.title}
+                        {t(`features.${feature.key}.title`)}
                       </Typography>
                     </Box>
                     <Typography variant="body2" color="text.secondary">
-                      {feature.description}
+                      {t(`features.${feature.key}.description`)}
                     </Typography>
                   </Stack>
                 </CardContent>

@@ -15,6 +15,7 @@ import Link from 'next/link';
 import FormButton from 'components/Public/FormButton/FormButton';
 import { signIn } from 'next-auth/react';
 import { useNavigating, usePrefetchRouter } from 'hooks/navigation';
+import { useI18n } from 'context/I18nContext';
 
 /**
  * Login form.
@@ -22,6 +23,7 @@ import { useNavigating, usePrefetchRouter } from 'hooks/navigation';
  */
 const LoginForm: React.FC = () => {
   const { navigate } = usePrefetchRouter();
+  const { t } = useI18n();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -62,10 +64,10 @@ const LoginForm: React.FC = () => {
               {/* Header */}
               <Stack spacing={1.5} textAlign="center">
                 <Typography variant="h4" component="h1">
-                  Welcome Back
+                  {t('auth.login.title')}
                 </Typography>
                 <Typography variant="body1" color="text.secondary">
-                  Sign in to your account to continue
+                  {t('auth.login.subtitle')}
                 </Typography>
               </Stack>{' '}
               {/* Form */}
@@ -78,13 +80,13 @@ const LoginForm: React.FC = () => {
                 <Stack spacing={3}>
                   <Stack spacing={1}>
                     <Typography variant="body2" fontWeight={500} color="text.primary">
-                      Email
+                      {t('auth.login.email')}
                     </Typography>
                     <TextField
                       id="email"
                       name="email"
                       type="email"
-                      placeholder="Enter your email"
+                      placeholder={t('auth.login.emailPlaceholder')}
                       required
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
@@ -96,13 +98,13 @@ const LoginForm: React.FC = () => {
 
                   <Stack spacing={1}>
                     <Typography variant="body2" fontWeight={500} color="text.primary">
-                      Password
+                      {t('auth.login.password')}
                     </Typography>
                     <TextField
                       id="password"
                       name="password"
                       type="password"
-                      placeholder="Enter your password"
+                      placeholder={t('auth.login.passwordPlaceholder')}
                       required
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
@@ -119,7 +121,7 @@ const LoginForm: React.FC = () => {
                   )}
 
                   <Box mt={1}>
-                    <FormButton>Sign In</FormButton>
+                    <FormButton>{t('auth.login.submit')}</FormButton>
                   </Box>
                 </Stack>
               </Box>
@@ -128,10 +130,10 @@ const LoginForm: React.FC = () => {
                 <Stack direction="row" spacing={0.5} alignItems="center" justifyContent="center">
                   {' '}
                   <Typography variant="body2" color="text.secondary">
-                    Don&apos;t have an account?
+                    {t('auth.login.noAccount')}
                   </Typography>
                   <MuiLink component={Link} href="/signup" variant="body2" sx={{ fontWeight: 600 }}>
-                    Sign up
+                    {t('auth.login.signup')}
                   </MuiLink>
                 </Stack>
 
@@ -142,7 +144,7 @@ const LoginForm: React.FC = () => {
                   color="text.secondary"
                   sx={{ textDecoration: 'underline' }}
                 >
-                  Forgot your password?
+                  {t('auth.login.forgot')}
                 </MuiLink>
               </Stack>
             </Stack>

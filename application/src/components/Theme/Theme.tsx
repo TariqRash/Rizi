@@ -5,6 +5,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import React, { useState, useContext, createContext, useEffect } from 'react';
 import { createThemeFromConfig } from './ThemeRegistry';
 import { createTheme } from '@mui/material/styles';
+import { useI18n } from 'context/I18nContext';
 
 interface ThemeModeContextProps {
   mode: 'light' | 'dark';
@@ -27,6 +28,7 @@ export function useThemeMode() {
  * Provides the Material UI theme and color mode context to the application.
  */
 export default function MaterialThemeProvider({ children }: { children: React.ReactNode }) {
+  const { direction } = useI18n();
   const [mode, setMode] = useState<'light' | 'dark'>('light'); // Always start with 'light' for SSR
   const [currentTheme, setCurrentTheme] = useState('modernize'); // Default theme
   const [theme, setTheme] = useState(() => {
@@ -34,6 +36,7 @@ export default function MaterialThemeProvider({ children }: { children: React.Re
     return createTheme({
       palette: { mode: 'light', primary: { main: '#0061EB' } },
       cssVariables: true,
+      direction,
     });
   });
 
@@ -51,13 +54,13 @@ export default function MaterialThemeProvider({ children }: { children: React.Re
 
   useEffect(() => {
     try {
-      const newTheme = createThemeFromConfig(currentTheme, mode, { cssVariables: true });
+      const newTheme = createThemeFromConfig(currentTheme, mode, { cssVariables: true, direction });
       setTheme(newTheme);
     } catch (error) {
       console.warn('Failed to load theme:', error);
       // Keep using the current theme as fallback
     }
-  }, [currentTheme, mode]);
+  }, [currentTheme, direction, mode]);
 
   const toggleMode = () => {
     setMode((prev) => (prev === 'light' ? 'dark' : 'light'));

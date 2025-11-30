@@ -1,14 +1,19 @@
+"use client";
+
 import React from 'react';
 import { Button, Stack } from '@mui/material';
 import Link from 'next/link';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LaunchIcon from '@mui/icons-material/Launch';
 import { COLORS, URLS, DIMENSIONS } from 'constants/landing';
+import { useI18n } from 'context/I18nContext';
 
 /**
  * CTAButtons component
  */
 const CTAButtons = () => {
+  const { t } = useI18n();
+
   return (
     <Stack direction={{ xs: 'column', sm: 'row' }} spacing={DIMENSIONS.spacing.small} justifyContent="center">
       <Button
@@ -27,7 +32,7 @@ const CTAButtons = () => {
           },
         }}
       >
-        View the code
+        {t('ctaButtons.viewCode')}
       </Button>
       <Button
         component={Link}
@@ -45,7 +50,7 @@ const CTAButtons = () => {
           },
         }}
       >
-        Deploy to DigitalOcean
+        {t('ctaButtons.deploy')}
       </Button>
     </Stack>
   );

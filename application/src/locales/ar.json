@@ -1,0 +1,144 @@
+{
+  "nav": {
+    "brand": "سي نوتس",
+    "pricing": "الأسعار",
+    "login": "تسجيل الدخول",
+    "signup": "إنشاء حساب",
+    "signout": "تسجيل الخروج",
+    "language": "اللغة"
+  },
+  "hero": {
+    "title": "سي نوتس",
+    "subtitle": "ابنِ خدمة SaaS أسرع من أي وقت مضى",
+    "description": "أطلق منتج SaaS الخاص بك بسرعة باستخدام قالب جاهز وقوي. مجهز بأحدث التقنيات وأهم التكاملات الأساسية."
+  },
+  "ctaButtons": {
+    "viewCode": "عرض الكود",
+    "deploy": "النشر على DigitalOcean"
+  },
+  "ctaSection": {
+    "title": "مستعد لإطلاق خدمتك؟",
+    "description": "نوفر لك كل ما تحتاجه لبدء تشغيل خدمتك بسرعة. لا تضيع وقتك في الأعمال المتكررة وركز على ما يميز منتجك."
+  },
+  "features": {
+    "headline": "ماذا يتضمن القالب",
+    "oneClickDeployment": {
+      "title": "نشر بضغطة زر",
+      "description": "انشر مباشرة إلى منصة التطبيقات في DigitalOcean مع إعداد وتكوين تلقائي."
+    },
+    "spaces": {
+      "title": "DigitalOcean Spaces",
+      "description": "تخزين الملفات وتكامل شبكة التوزيع عبر DigitalOcean Spaces."
+    },
+    "gradient": {
+      "title": "DigitalOcean Gradient",
+      "description": "إنشاء فواتير مدعوم بالذكاء الاصطناعي باستخدام واجهة الاستدلال الخادمية."
+    },
+    "database": {
+      "title": "PostgreSQL و Prisma ORM",
+      "description": "قاعدة بيانات لإدارة البيانات بكفاءة وقابلية للتوسع."
+    },
+    "stripe": {
+      "title": "تكامل Stripe",
+      "description": "مستخدم لإدارة الاشتراكات."
+    },
+    "auth": {
+      "title": "توثيق NextAuth",
+      "description": "نظام توثيق مدمج لإدارة المستخدمين بشكل أفضل."
+    },
+    "email": {
+      "title": "خدمة البريد Resend",
+      "description": "خدمة بريد للإرسال التوثيقي والفواتير."
+    },
+    "admin": {
+      "title": "لوحة تحكم المدير",
+      "description": "واجهة إدارة كاملة للمستخدمين والاشتراكات ومراقبة النظام."
+    },
+    "monitoring": {
+      "title": "مراقبة صحة النظام",
+      "description": "مراقبة لحظية لجميع الخدمات بما في ذلك قاعدة البيانات والبريد والتخزين وخدمات الذكاء الاصطناعي."
+    }
+  },
+  "preview": {
+    "heading": "معاينة التطبيق",
+    "sidebar": {
+      "dashboard": "لوحة التحكم",
+      "notes": "ملاحظاتي",
+      "subscription": "الاشتراك",
+      "account": "الحساب"
+    },
+    "content": {
+      "title": "ملاحظاتي",
+      "cta": "إضافة ملاحظة",
+      "cards": {
+        "ideaTitle": "أفكار المشاريع",
+        "ideaBody": "أنشئ حزمة انطلاقة SaaS...",
+        "meetingTitle": "ملاحظات الاجتماع",
+        "meetingBody": "مناقشة الميزات الجديدة...",
+        "todoTitle": "قائمة المهام",
+        "todoBody": "تطبيق التوثيق...",
+        "recent": "منذ ساعتين",
+        "yesterday": "منذ يوم",
+        "daysAgo": "منذ 3 أيام"
+      }
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "أهلاً بعودتك",
+      "subtitle": "سجّل الدخول لمواصلة العمل على حسابك",
+      "email": "البريد الإلكتروني",
+      "emailPlaceholder": "أدخل بريدك الإلكتروني",
+      "password": "كلمة المرور",
+      "passwordPlaceholder": "أدخل كلمة المرور",
+      "submit": "تسجيل الدخول",
+      "noAccount": "ليس لديك حساب؟",
+      "signup": "إنشاء حساب",
+      "forgot": "نسيت كلمة المرور؟"
+    },
+    "signup": {
+      "title": "إنشاء حساب",
+      "subtitle": "سجّل للبدء باستخدام حسابك",
+      "email": "البريد الإلكتروني",
+      "emailPlaceholder": "أدخل بريدك الإلكتروني",
+      "password": "كلمة المرور",
+      "passwordPlaceholder": "أدخل كلمة المرور",
+      "confirmPassword": "تأكيد كلمة المرور",
+      "confirmPasswordPlaceholder": "أعد إدخال كلمة المرور",
+      "submit": "إنشاء حساب",
+      "already": "لديك حساب بالفعل؟",
+      "signin": "تسجيل الدخول",
+      "mismatch": "كلمتا المرور غير متطابقتين.",
+      "genericError": "حدث خطأ أثناء التسجيل. الرجاء المحاولة لاحقاً.",
+      "generic": "حدث خطأ ما",
+      "success": "تم إنشاء الحساب."
+    },
+    "forgot": {
+      "title": "نسيت كلمة المرور",
+      "subtitle": "أدخل بريدك الإلكتروني لإرسال تعليمات إعادة التعيين",
+      "email": "البريد الإلكتروني",
+      "emailPlaceholder": "أدخل بريدك الإلكتروني",
+      "submit": "إرسال رابط إعادة التعيين",
+      "back": "العودة لتسجيل الدخول"
+    },
+    "reset": {
+      "title": "إعادة تعيين كلمة المرور",
+      "subtitle": "اختر كلمة مرور جديدة لحسابك",
+      "password": "كلمة المرور الجديدة",
+      "passwordPlaceholder": "أدخل كلمة المرور الجديدة",
+      "confirmPassword": "تأكيد كلمة المرور",
+      "confirmPasswordPlaceholder": "أعد إدخال كلمة المرور الجديدة",
+      "submit": "إعادة التعيين",
+      "mismatch": "كلمتا المرور غير متطابقتين"
+    },
+    "magic": {
+      "title": "تحقق من بريدك",
+      "subtitle": "أرسلنا رابط تسجيل دخول سحري",
+      "resend": "إعادة إرسال البريد"
+    }
+  },
+  "languageSwitcher": {
+    "arabic": "العربية",
+    "english": "الإنجليزية"
+  }
+}
