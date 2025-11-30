@@ -1,4 +1,4 @@
-import { Note, Subscription, User, UserWithSubscriptions, SubscriptionStatus } from 'types';
+import { Note, Subscription, User, UserWithSubscriptions, SubscriptionStatus, Compound } from 'types';
 import { ServiceConfigStatus, ConfigurableService } from '../status/serviceConfigStatus';
 
 export type DatabaseProvider = 'Postgres';
@@ -75,6 +75,12 @@ export abstract class DatabaseClient implements ConfigurableService {
     ) => Promise<{ identifier: string; token: string; expires: Date } | null>;
     delete: (identifier: string, token: string) => Promise<void>;
     deleteExpired: (now: Date) => Promise<void>;
+  };
+  abstract compound: {
+    findByDomain: (
+      hostname: string,
+      subdomainCandidates: string[]
+    ) => Promise<Compound | null>;
   };
   abstract checkConnection(): Promise<boolean>;
 

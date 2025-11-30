@@ -8,11 +8,13 @@ datasource db {
 }
 
 model User {
-  id           String  @id @default(uuid())
-  name         String
-  email        String  @unique
-  passwordHash String
-  image        String?
+  id             String         @id @default(uuid())
+  name           String
+  email          String         @unique
+  passwordHash   String
+  image          String?
+  compound       Compound       @relation(fields: [compoundId], references: [id])
+  compoundId     String
 
   role      Role     @default(USER)
   createdAt DateTime @default(now())
@@ -29,6 +31,16 @@ model User {
   serviceRequests  ServiceRequest[]         @relation("UserServiceRequests")
   facilityBookings FacilityBooking[]        @relation("UserFacilityBookings")
   accessLogs       AccessLog[]              @relation("UserAccessLogs")
+}
+
+model Compound {
+  id           String   @id @default(uuid())
+  name         String
+  subdomain    String   @unique
+  customDomain String?  @unique
+  createdAt    DateTime @default(now())
+
+  users User[]
 }
 
 model Subscription {

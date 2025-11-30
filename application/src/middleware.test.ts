@@ -4,9 +4,17 @@ import { USER_ROLES } from 'lib/auth/roles';
 import { HTTP_STATUS } from 'lib/api/http';
 
 const mockAuth = jest.fn();
+const mockResolveTenant = jest.fn();
+const mockBuildTenantHeaders = jest.fn();
 
 jest.mock('lib/auth/auth', () => ({
   auth: () => mockAuth(),
+}));
+
+jest.mock('lib/tenant/tenantResolver', () => ({
+  resolveTenantFromRequest: () => mockResolveTenant(),
+  buildTenantHeaders: (...args: unknown[]) => mockBuildTenantHeaders(...args),
+  TENANT_HEADER: 'x-tenant-id',
 }));
 
 const createMockRequest = (
@@ -18,12 +26,27 @@ const createMockRequest = (
       pathname,
     },
     url: `${url}${pathname}`,
+    headers: new Headers(),
   } as unknown as NextRequest;
 };
 
 describe('middleware', () => {
+  const tenant = {
+    compound: {
+      id: 'tenant-1',
+      subdomain: 'tenant',
+      customDomain: null,
+      name: 'Tenant 1',
+      createdAt: new Date(),
+    },
+    hostname: 'tenant.local',
+    subdomain: 'tenant',
+  };
+
   beforeEach(() => {
     jest.clearAllMocks();
+    mockResolveTenant.mockResolvedValue(tenant);
+    mockBuildTenantHeaders.mockImplementation((_tenant, headers) => headers);
   });
 
   describe('Root path (/)', () => {

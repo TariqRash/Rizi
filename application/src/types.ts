@@ -9,10 +9,19 @@ export interface User {
   image: string | null;
 
   role: UserRole;
+  compoundId: string;
   createdAt: Date;
 
   verificationToken?: string | null;
   emailVerified: boolean;
+}
+
+export interface Compound {
+  id: string;
+  name: string;
+  subdomain: string;
+  customDomain: string | null;
+  createdAt: Date;
 }
 
 // Subscription type
