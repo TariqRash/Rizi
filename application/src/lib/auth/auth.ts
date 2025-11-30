@@ -9,8 +9,14 @@ import { User, UserRole } from 'types';
 import { InvalidCredentialsError } from './errors';
 import { serverConfig } from 'settings';
 
-const hasRole = (user: unknown): user is { id: string; role: UserRole } => {
-  return typeof user === 'object' && user !== null && 'role' in user && 'id' in user;
+const hasRole = (user: unknown): user is { id: string; role: UserRole; compoundId: string } => {
+  return (
+    typeof user === 'object' &&
+    user !== null &&
+    'role' in user &&
+    'id' in user &&
+    'compoundId' in user
+  );
 };
 
 const verifyMagicLinkToken = async (token: string, email: string) => {
@@ -92,6 +98,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         token.role = (user as User).role;
         token.email = (user as User).email;
         token.name = (user as User).name;
+        token.compoundId = (user as User).compoundId;
       }
 
       if (trigger === 'update') {
@@ -105,6 +112,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (token && hasRole(token)) {
         session.user.id = token.id as string;
         session.user.role = token.role as UserRole;
+        session.user.compoundId = token.compoundId as string;
       }
 
       session.user.email = token.email as string;

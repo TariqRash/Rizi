@@ -10,6 +10,7 @@ import { serverConfig } from 'settings';
 import { DatabaseClient } from 'services/database/database';
 import { SubscriptionPlanEnum, SubscriptionStatusEnum, User } from 'types';
 import { createBillingService } from 'services/billing/billingFactory';
+import { TENANT_HEADER } from 'lib/tenant/tenantResolver';
 
 const createSubscription = async (db: DatabaseClient, user: User) => {
   const billingService = await createBillingService();
@@ -81,6 +82,14 @@ export async function POST(req: NextRequest) {
     const dbClient = await createDatabaseService();
     const userCount = await dbClient.user.count();
     const isFirstUser = userCount === 0;
+    const compoundId = req.headers.get(TENANT_HEADER);
+
+    if (!compoundId) {
+      return NextResponse.json(
+        { error: 'Tenant context is required' },
+        { status: HTTP_STATUS.FORBIDDEN }
+      );
+    }
 
     const userExists = await dbClient.user.findByEmail(email);
     if (userExists) {
@@ -100,6 +109,7 @@ export async function POST(req: NextRequest) {
       role: isFirstUser ? USER_ROLES.ADMIN : USER_ROLES.USER,
       verificationToken,
       emailVerified: !isEmailEnabled,
+      compoundId,
     });
 
     // Skip email sending if email verification is disabled

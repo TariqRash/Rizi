@@ -215,6 +215,32 @@ export class SqlDatabaseService extends DatabaseClient {
       });
     },
   };
+
+  compound = {
+    findByDomain: async (hostname: string, subdomainCandidates: string[]) => {
+      const normalizedHost = hostname.toLowerCase();
+      const uniqueSubdomains = Array.from(
+        new Set(
+          subdomainCandidates
+            .map((candidate) => candidate.toLowerCase())
+            .filter((candidate) => candidate.length > 0)
+        )
+      );
+
+      const compound = await prisma.compound.findFirst({
+        where: {
+          OR: [
+            { customDomain: normalizedHost },
+            ...(uniqueSubdomains.length > 0
+              ? [{ subdomain: { in: uniqueSubdomains } }]
+              : []),
+          ],
+        },
+      });
+
+      return compound;
+    },
+  };
   /**
    * Checks if the database service is properly configured and accessible.
    * Tests the connection by performing a simple query.
