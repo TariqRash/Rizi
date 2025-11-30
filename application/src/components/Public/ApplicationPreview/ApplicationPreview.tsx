@@ -16,17 +16,17 @@ const ApplicationPreview = () => {
               Application Preview
             </Typography>
           </Box>
-          <Box sx={{ 
+          <Box sx={{
             position: 'relative',
             display: 'flex',
             justifyContent: 'center'
           }}>
-            <Box 
-              component="figure" 
-              aria-label="SeaNotes application interface mockup"
-              sx={{ 
-                bgcolor: 'background.paper', 
-                borderRadius: 3, 
+            <Box
+              component="figure"
+              aria-label="Rizi operations console preview"
+              sx={{
+                bgcolor: 'background.paper',
+                borderRadius: 3,
                 border: '1px solid',
                 borderColor: 'divider',
                 overflow: 'hidden',
@@ -49,7 +49,7 @@ const ApplicationPreview = () => {
                 <Box sx={{ width: DIMENSIONS.terminalDot.width, height: DIMENSIONS.terminalDot.height, borderRadius: '50%', bgcolor: '#ffbd2e' }} />
                 <Box sx={{ width: DIMENSIONS.terminalDot.width, height: DIMENSIONS.terminalDot.height, borderRadius: '50%', bgcolor: '#27ca3f' }} />
                 <Typography variant="body2" sx={{ color: 'grey.400', ml: 2, fontFamily: 'monospace' }}>
-                  SeaNotes - localhost:3000
+                  Rizi - admin.rizi.app
                 </Typography>
               </Box>
               
@@ -68,21 +68,17 @@ const ApplicationPreview = () => {
                 }}>
                   <Stack spacing={DIMENSIONS.spacing.small}>
                     <Typography variant="h6" sx={{ color: 'primary.main', fontWeight: 'bold' }}>
-                      🐳 SeaNotes
+                      🏙️ Rizi Admin
                     </Typography>
                     <Box sx={{ height: 1, bgcolor: 'divider', my: 1 }} />
                     <Typography variant="body2" sx={{ color: 'text.secondary', fontWeight: 500 }}>
-                      Dashboard
+                      Command Center
                     </Typography>
-                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                      My Notes
-                    </Typography>
-                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                      Subscription
-                    </Typography>
-                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                      Account
-                    </Typography>
+                    {[ 'Compounds', 'Residents', 'Tickets & SLAs', 'Vendors', 'Billing', 'Access Control', 'Insights' ].map((item) => (
+                      <Typography key={item} variant="body2" sx={{ color: 'text.secondary' }}>
+                        {item}
+                      </Typography>
+                    ))}
                   </Stack>
                 </Box>
                 
@@ -91,10 +87,10 @@ const ApplicationPreview = () => {
                   <Stack spacing={DIMENSIONS.spacing.stack}>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                       <Typography variant="h5" fontWeight="bold">
-                        My Notes
+                        Live service tickets
                       </Typography>
                       <Button variant="contained" size="small" sx={{ bgcolor: 'primary.main' }}>
-                        Add Note
+                        New request
                       </Button>
                     </Box>
                     
@@ -104,20 +100,20 @@ const ApplicationPreview = () => {
                       gap: DIMENSIONS.spacing.small
                     }}>
                       {/* Note cards */}
-                      {[
-                        { title: 'Project Ideas', content: 'Build a SaaS starter kit...', date: '2 hours ago' },
-                        { title: 'Meeting Notes', content: 'Discuss new features...', date: '1 day ago' },
-                        { title: 'Todo List', content: 'Implement authentication...', date: '3 days ago' }
-                      ].map((note, index) => (
+                      {[ 
+                        { title: 'HVAC - Tower B', content: 'Escalated to vendor | 2h SLA | Technician on-site', date: '2h ago' },
+                        { title: 'Collections | January', content: '41 open invoices • 92% paid • Arabic + English reminders live', date: 'Today' },
+                        { title: 'Access control', content: 'Guest passes issued: 18 | Parking alerts resolved: 6', date: 'This week' }
+                      ].map((card, index) => (
                         <Card key={index} sx={{ p: DIMENSIONS.spacing.small, cursor: 'pointer', '&:hover': { bgcolor: 'grey.50' } }}>
                           <Typography variant="h6" fontWeight="bold" sx={{ mb: 1 }}>
-                            {note.title}
+                            {card.title}
                           </Typography>
                           <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                            {note.content}
+                            {card.content}
                           </Typography>
                           <Typography variant="caption" color="text.secondary">
-                            {note.date}
+                            {card.date}
                           </Typography>
                         </Card>
                       ))}

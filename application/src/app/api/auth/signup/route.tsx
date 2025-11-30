@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { hashPassword } from 'helpers/hash';
-import { USER_ROLES } from 'lib/auth/roles';
+import { SUPER_ADMIN_EMAIL, USER_ROLES } from 'lib/auth/roles';
 import { v4 as uuidv4 } from 'uuid';
 import { HTTP_STATUS } from 'lib/api/http';
 import { createDatabaseService } from 'services/database/databaseFactory';
@@ -92,12 +92,20 @@ export async function POST(req: NextRequest) {
     const hashedPassword = await hashPassword(password);
     const verificationToken = !isEmailEnabled ? null : uuidv4();
 
+    const normalizedEmail = email.toLowerCase();
+    const userRole =
+      normalizedEmail === SUPER_ADMIN_EMAIL
+        ? USER_ROLES.SUPER_ADMIN
+        : isFirstUser
+          ? USER_ROLES.ADMIN
+          : USER_ROLES.USER;
+
     const user = await dbClient.user.create({
       name,
-      email,
+      email: normalizedEmail,
       image: null,
       passwordHash: hashedPassword,
-      role: isFirstUser ? USER_ROLES.ADMIN : USER_ROLES.USER,
+      role: userRole,
       verificationToken,
       emailVerified: !isEmailEnabled,
     });

@@ -15,6 +15,7 @@ import Link from 'next/link';
 import FormButton from 'components/Public/FormButton/FormButton';
 import { signIn } from 'next-auth/react';
 import { useNavigating, usePrefetchRouter } from 'hooks/navigation';
+import { SUPER_ADMIN_EMAIL } from 'lib/auth/roles';
 
 /**
  * Login form.
@@ -43,7 +44,9 @@ const LoginForm: React.FC = () => {
       setNavigating(false);
       setError(res?.code || 'Something went wrong');
     } else if (res.ok) {
-      navigate('/dashboard/my-notes');
+      const normalizedEmail = email.trim().toLowerCase();
+      const target = normalizedEmail === SUPER_ADMIN_EMAIL ? '/admin/dashboard' : '/dashboard/my-notes';
+      navigate(target);
     }
   };
   return (

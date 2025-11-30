@@ -21,6 +21,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { useSession, signOut } from 'next-auth/react';
 import ServiceWarningIndicator from 'components/Common/ServiceWarningIndicator/ServiceWarningIndicator';
 import { usePathname } from 'next/navigation';
+import { SUPER_ADMIN_EMAIL } from 'lib/auth/roles';
 
 /**
  * Main navigation bar of the application.
@@ -43,9 +44,12 @@ const NavBar = () => {
     signOut({ callbackUrl: '/' });
   };
 
+  const isSuperAdmin = session?.user?.email?.toLowerCase() === SUPER_ADMIN_EMAIL;
+
   const navLinks = session
     ? [
         { href: '/pricing', label: 'Pricing' },
+        { href: isSuperAdmin ? '/admin/dashboard' : '/dashboard', label: isSuperAdmin ? 'Super Admin' : 'Dashboard' },
         { href: '#', label: 'Sign out', onClick: handleLogout },
       ]
     : [
@@ -102,7 +106,7 @@ const NavBar = () => {
               fontWeight={700}
               sx={{ cursor: 'pointer' }}
             >
-              🐳 SeaNotes
+              🏙️ Rizi | ريزي
             </Typography>
           </Link>
 
