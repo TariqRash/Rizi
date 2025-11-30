@@ -35,41 +35,42 @@ const HeroSection = () => {
             gap: DIMENSIONS.spacing.container
           }}>
             <Typography 
-              variant="h1" 
-              component="h1" 
+              variant="h1"
+              component="h1"
               id="hero-title"
               fontWeight="bold"
-              sx={{ 
+              sx={{
                 textAlign: 'center',
                 width: '100%'
               }}
             >
-              SeaNotes
+              Rizi | ريزي
             </Typography>
             <Typography 
-              variant="h3" 
-              component="h2" 
-              fontWeight="bold" 
+              variant="h3"
+              component="h2"
+              fontWeight="bold"
               color="primary.main"
-              sx={{ 
+              sx={{
                 textAlign: 'center',
                 width: '100%'
               }}
             >
-              Build Your SaaS Faster Than Ever
+              Multi-compound operations built for the Gulf
             </Typography>
             <Typography 
-              variant="h6" 
-              component="p" 
-              color="text.secondary" 
-              sx={{ 
-                maxWidth: DIMENSIONS.layout.maxContentWidth, 
+              variant="h6"
+              component="p"
+              color="text.secondary"
+              sx={{
+                maxWidth: DIMENSIONS.layout.maxContentWidth,
                 mx: 'auto',
                 textAlign: 'center',
                 width: '100%'
               }}
             >
-              Launch your SaaS product in record time with our powerful, ready-to-use template. Packed with modern technologies and essential integrations.
+              Manage estates, resident services, vendors, and collections from one Arabic-first platform tailored to compound living.
+              Keep owners, operators, and tenants connected with bilingual workflows and data you can act on.
             </Typography>
             <Box component="nav" aria-label="Primary actions">
               <CTAButtons />
