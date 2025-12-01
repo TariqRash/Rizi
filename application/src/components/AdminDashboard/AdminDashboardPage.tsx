@@ -202,7 +202,6 @@ export default function AdminDashboard() {
         </Box>
         <Divider sx={{ mb: 3 }} />
       </CardContent>
-      <RolePlaybooks />
       <CardContent sx={{ pt: 0 }}>
         <Typography variant="h6" fontWeight="bold" sx={{ mb: 2 }}>
           User Management
