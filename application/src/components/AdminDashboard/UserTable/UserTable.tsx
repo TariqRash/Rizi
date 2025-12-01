@@ -65,6 +65,9 @@ const UserTable: React.FC<UserTableProps> = ({
         {users.map((user) => {
           const plan = user.subscription ? user.subscription.plan : 'none';
           const status = user.subscription ? user.subscription.status : 'none';
+          const isSuperAdmin = user.role === USER_ROLES.SUPER_ADMIN;
+          const isAdmin = user.role === USER_ROLES.ADMIN;
+
           return (
             <TableRow key={user.id}>
               <TableCell>{user.name}</TableCell>
@@ -83,10 +86,15 @@ const UserTable: React.FC<UserTableProps> = ({
                 {isLoadingEdit && user.id === selectedUser?.id ? (
                   <CircularProgress size={20} />
                 ) : (
-                  <Switch
-                    checked={user.role === USER_ROLES.ADMIN}
-                    onChange={(_, checked) => handleAdminSwitchChange(user, checked)}
-                  />
+                  <Stack direction="row" spacing={1} alignItems="center">
+                    <Switch
+                      checked={isAdmin || isSuperAdmin}
+                      onChange={(_, checked) => handleAdminSwitchChange(user, checked)}
+                      disabled={isSuperAdmin}
+                      inputProps={{ 'aria-label': isSuperAdmin ? 'Super admin locked' : 'Admin access' }}
+                    />
+                    {isSuperAdmin && <Chip size="small" color="primary" label="Super admin" />}
+                  </Stack>
                 )}
               </TableCell>
               <TableCell>

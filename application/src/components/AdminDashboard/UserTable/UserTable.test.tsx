@@ -40,6 +40,21 @@ describe('<UserTable />', () => {
         createdAt: new Date('2023-01-02'),
       },
     },
+    {
+      id: '3',
+      name: 'Tariq',
+      email: 'tariq@ib.com.sa',
+      role: USER_ROLES.SUPER_ADMIN,
+      createdAt: new Date('2023-02-02'),
+      subscription: {
+        plan: SubscriptionPlanEnum.PRO,
+        status: SubscriptionStatusEnum.ACTIVE,
+        id: 'sub3',
+        userId: '3',
+        customerId: null,
+        createdAt: new Date('2023-02-02'),
+      },
+    },
   ];
   const handleAdminSwitchChange = jest.fn();
   const handleEditClick = jest.fn();
@@ -89,6 +104,22 @@ describe('<UserTable />', () => {
     const switches = screen.getAllByRole('checkbox');
     fireEvent.click(switches[0]);
     expect(handleAdminSwitchChange).toHaveBeenCalled();
+  });
+
+  it('disables admin toggle for super admin', () => {
+    render(
+      <UserTable
+        users={users}
+        selectedUser={null}
+        isLoadingEdit={false}
+        handleAdminSwitchChange={handleAdminSwitchChange}
+        handleEditClick={handleEditClick}
+      />
+    );
+
+    const switches = screen.getAllByRole('checkbox');
+    const superAdminSwitch = switches[2];
+    expect(superAdminSwitch).toBeDisabled();
   });
 
   it('shows loading spinner for selected user', () => {

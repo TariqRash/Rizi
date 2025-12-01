@@ -88,7 +88,7 @@ const SidebarContent = ({ onNavigate }: { onNavigate?: () => void }) => {
     <>
       <SidebarHeader justifyContent="space-between">
         <Typography variant="h5" fontWeight={600}>
-          🐳 SeaNotes
+          🏙️ Rizi
         </Typography>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>{getProfileIcon()}</Box>
       </SidebarHeader>
@@ -105,6 +105,13 @@ const SidebarContent = ({ onNavigate }: { onNavigate?: () => void }) => {
           >
             My Notes
           </SidebarLink>
+          <SidebarLink
+            href="/dashboard/role-flows"
+            icon={<Assessment fontSize="small" />}
+            onClick={onNavigate}
+          >
+            Role Dashboards
+          </SidebarLink>
         </List>
       </Box>
 
@@ -112,7 +119,7 @@ const SidebarContent = ({ onNavigate }: { onNavigate?: () => void }) => {
 
       <Box sx={{ p: 2 }}>
         <List sx={{ p: 0 }}>
-          {session?.user?.role === USER_ROLES.ADMIN && (
+          {(session?.user?.role === USER_ROLES.ADMIN || session?.user?.role === USER_ROLES.SUPER_ADMIN) && (
             <SidebarLink
               href="/admin/dashboard"
               icon={<Assessment fontSize="small" />}
