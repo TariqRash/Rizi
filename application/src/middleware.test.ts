@@ -61,6 +61,19 @@ describe('middleware', () => {
       expect(location).toBe('http://localhost:3000/dashboard/my-notes');
     });
 
+    it('redirects authenticated super admins to /admin/dashboard', async () => {
+      mockAuth.mockResolvedValue({
+        user: { id: '1', role: USER_ROLES.SUPER_ADMIN },
+      });
+
+      const request = createMockRequest('/');
+      const response = await middleware(request);
+      const location = response.headers.get('location');
+
+      expect(response.status).toBe(HTTP_STATUS.TEMPORARY_REDIRECT);
+      expect(location).toBe('http://localhost:3000/admin/dashboard');
+    });
+
     it('allows unauthenticated users to stay on root', async () => {
       mockAuth.mockResolvedValue(null);
 
@@ -165,6 +178,17 @@ describe('middleware', () => {
       expect(response.status).not.toBe(HTTP_STATUS.TEMPORARY_REDIRECT);
     });
 
+    it('allows authenticated super admin users to access admin routes', async () => {
+      mockAuth.mockResolvedValue({
+        user: { id: '1', role: USER_ROLES.SUPER_ADMIN },
+      });
+
+      const request = createMockRequest('/admin/users/manage');
+      const response = await middleware(request);
+
+      expect(response.status).not.toBe(HTTP_STATUS.TEMPORARY_REDIRECT);
+    });
+
     it('redirects authenticated users without role to /', async () => {
       mockAuth.mockResolvedValue({
         user: { id: '1' }, // no role
@@ -228,6 +252,19 @@ describe('middleware', () => {
       expect(response.status).toBe(HTTP_STATUS.TEMPORARY_REDIRECT);
       const location = response.headers.get('location');
       expect(location).toBe('http://localhost:3000/dashboard/my-notes');
+    });
+
+    it('redirects authenticated super admins from /login to /admin/dashboard', async () => {
+      mockAuth.mockResolvedValue({
+        user: { id: '1', role: USER_ROLES.SUPER_ADMIN },
+      });
+
+      const request = createMockRequest('/login');
+      const response = await middleware(request);
+
+      expect(response.status).toBe(HTTP_STATUS.TEMPORARY_REDIRECT);
+      const location = response.headers.get('location');
+      expect(location).toBe('http://localhost:3000/admin/dashboard');
     });
 
     it('redirects authenticated admin users from /signup to /dashboard/my-notes', async () => {

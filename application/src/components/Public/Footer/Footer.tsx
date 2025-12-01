@@ -11,16 +11,18 @@ import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 import SupportIcon from '@mui/icons-material/Support';
 import ForumIcon from '@mui/icons-material/Forum';
 import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
+import LockOpenIcon from '@mui/icons-material/LockOpen';
 import { URLS, DIMENSIONS } from 'constants/landing';
 
 const footerSections = [
   {
     title: 'Rizi platform',
     links: [
-      { label: 'Visit rizi.sa', href: URLS.marketingSite, icon: <LaunchIcon sx={{ fontSize: DIMENSIONS.iconSize.small }} /> },
+      { label: 'Visit rizi.app', href: URLS.marketingSite, icon: <LaunchIcon sx={{ fontSize: DIMENSIONS.iconSize.small }} /> },
       { label: 'Documentation', href: URLS.documentation, icon: <MenuBookIcon sx={{ fontSize: DIMENSIONS.iconSize.small }} /> },
       { label: 'Book a demo', href: URLS.demo, icon: <CalendarTodayIcon sx={{ fontSize: DIMENSIONS.iconSize.small }} /> },
       { label: 'Arabic product deck', href: URLS.arabicDeck, icon: <PictureAsPdfIcon sx={{ fontSize: DIMENSIONS.iconSize.small }} /> },
+      { label: 'Log in to Rizi', href: '/login', icon: <LockOpenIcon sx={{ fontSize: DIMENSIONS.iconSize.small }} /> },
     ],
   },
   {
@@ -114,3 +116,4 @@ export default function Footer() {
     </Box>
   );
 }
+

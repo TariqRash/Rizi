@@ -4,6 +4,7 @@ import { UserRole } from 'types';
 import { USER_ROLES } from 'lib/auth/roles';
 
 const ROLE_HOME_URL: Record<UserRole, string> = {
+  [USER_ROLES.SUPER_ADMIN]: '/admin/dashboard',
   [USER_ROLES.USER]: '/dashboard/my-notes',
   [USER_ROLES.ADMIN]: '/dashboard/my-notes',
 };
@@ -45,7 +46,7 @@ export async function middleware(request: NextRequest) {
     if (!isLoggedIn) {
       // Redirect unauthenticated users to login
       return NextResponse.redirect(new URL('/login', request.url));
-    } else if (role !== USER_ROLES.ADMIN) {
+    } else if (role !== USER_ROLES.ADMIN && role !== USER_ROLES.SUPER_ADMIN) {
       // Redirect non-admin users to their role-based dashboard
       return NextResponse.redirect(new URL(ROLE_HOME_URL[role] ?? '/', request.url));
     }

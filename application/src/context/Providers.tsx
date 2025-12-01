@@ -3,6 +3,7 @@ import { SessionProvider } from 'next-auth/react';
 import { UserProvider } from './UserContext';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import { NavigatingProvider } from './Navigation';
+import { DirectionProvider } from './Direction';
 
 /**
  * Global wrapper that groups all context providers used in the application.
@@ -15,7 +16,9 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
     <SessionProvider>
       <AppRouterCacheProvider options={{ enableCssLayer: true }}>
         <UserProvider>
-          <NavigatingProvider>{children}</NavigatingProvider>
+          <DirectionProvider>
+            <NavigatingProvider>{children}</NavigatingProvider>
+          </DirectionProvider>
         </UserProvider>
       </AppRouterCacheProvider>
     </SessionProvider>
