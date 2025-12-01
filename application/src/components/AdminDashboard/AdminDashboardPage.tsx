@@ -12,6 +12,7 @@ import UserTable from './UserTable/UserTable';
 import EditUserDialog from './EditUserDialog/EditUserDialog';
 import UserFilterControls from './UserFilterControls/UserFilterControls';
 import Pagination from '../Common/Pagination/Pagination';
+import RolePlaybooks from './RolePlaybooks/RolePlaybooks';
 
 /**
  * Admin dashboard component for managing users, roles, and subscriptions.

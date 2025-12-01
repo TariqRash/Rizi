@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono, Roboto, Plus_Jakarta_Sans, Inter } from 'next/font/google';
+import { Geist, Geist_Mono, Roboto, Plus_Jakarta_Sans, Inter, Noto_Sans_Arabic } from 'next/font/google';
 import { Providers } from 'context/Providers';
 import WithLoadingSpinner from 'components/Common/LoadingSpinner/LoadingSpinner';
 
@@ -34,6 +34,13 @@ const inter = Inter({
   variable: '--font-inter',
 });
 
+const notoArabic = Noto_Sans_Arabic({
+  weight: ['400', '500', '700'],
+  subsets: ['arabic', 'latin'],
+  display: 'swap',
+  variable: '--font-noto-arabic',
+});
+
 export const metadata: Metadata = {
   title: 'Rizi | Multi-compound operations OS',
   description: 'Rizi unifies resident services, vendor dispatch, billing, and access control for compounds and towers across the Gulf.',
@@ -46,7 +53,11 @@ export const metadata: Metadata = {
  * @returns HTML layout with fonts and providers applied.
  */
 const RootLayout = ({ children }: { children: React.ReactNode }) => (
-  <html lang="en" className={`${roboto.variable} ${plusJakartaSans.variable} ${inter.variable}`}>
+  <html
+    lang="en"
+    dir="rtl"
+    className={`${roboto.variable} ${plusJakartaSans.variable} ${inter.variable} ${notoArabic.variable}`}
+  >
     <body
       className={`${geistSans.variable} ${geistMono.variable}`}
       style={{ margin: 0, WebkitFontSmoothing: 'antialiased', MozOsxFontSmoothing: 'grayscale' }}
