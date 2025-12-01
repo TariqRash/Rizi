@@ -1,105 +1,19 @@
 'use client';
 
+import Link from 'next/link';
 import { useState } from 'react';
-import {
-  Alert,
-  Box,
-  Card,
-  CardContent,
-  CardHeader,
-  Chip,
-  Divider,
-  Grid,
-  Stack,
-  TextField,
-  Typography,
-  Button,
-  List,
-  ListItem,
-  ListItemText,
-} from '@mui/material';
+import { Alert, Box, Button, Card, CardContent, CardHeader, Chip, Divider, Grid, List, ListItem, ListItemText, Stack, Typography } from '@mui/material';
 import PageContainer from 'components/Common/PageContainer/PageContainer';
-import { RoleFlow, UseCase, FlowField, roleFlows } from './roleFlows';
+import { FlowForm, FormState } from './FlowForm';
+import { RoleFlow, UseCase, roleFlows } from './roleFlows';
 import { format } from 'date-fns';
 
-type FormState = Record<string, string>;
 type FlowLog = {
   id: string;
   title: string;
   summary: string;
   timestamp: string;
 };
-
-const defaultFormValues = (fields: FlowField[]) =>
-  fields.reduce<FormState>((acc, field) => {
-    acc[field.name] = '';
-    return acc;
-  }, {});
-
-function FlowForm({
-  useCaseId,
-  formId,
-  title,
-  fields,
-  output,
-  onSubmit,
-}: {
-  useCaseId: string;
-  formId: string;
-  title: string;
-  fields: FlowField[];
-  output: string;
-  onSubmit: (useCaseId: string, payload: FormState, output: string) => void;
-}) {
-  const [state, setState] = useState<FormState>(() => defaultFormValues(fields));
-
-  const handleChange = (field: FlowField) => (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setState((prev) => ({ ...prev, [field.name]: event.target.value }));
-  };
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    onSubmit(useCaseId, state, output);
-  };
-
-  return (
-    <Card variant="outlined" sx={{ height: '100%' }}>
-      <CardHeader title={title} subheader={output} />
-      <CardContent>
-        <Stack component="form" spacing={2} onSubmit={handleSubmit}>
-          {fields.map((field) => (
-            <TextField
-              key={`${formId}-${field.name}`}
-              required={field.required}
-              select={field.type === 'select'}
-              type={field.type === 'email' ? 'email' : 'text'}
-              name={field.name}
-              label={field.label}
-              value={state[field.name] ?? ''}
-              onChange={handleChange(field)}
-              placeholder={field.placeholder}
-              fullWidth
-              SelectProps={{ native: true }}
-              multiline={field.type === 'textarea'}
-              minRows={field.type === 'textarea' ? 3 : undefined}
-            >
-              {field.type === 'select' && <option value="">Select option</option>}
-              {field.type === 'select' &&
-                field.options?.map((option) => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                ))}
-            </TextField>
-          ))}
-          <Button type="submit" variant="contained">
-            Save & track
-          </Button>
-        </Stack>
-      </CardContent>
-    </Card>
-  );
-}
 
 function UseCaseCard({ useCase, onLog }: { useCase: UseCase; onLog: (useCaseId: string, payload: FormState, output: string) => void }) {
   return (
@@ -113,6 +27,9 @@ function UseCaseCard({ useCase, onLog }: { useCase: UseCase; onLog: (useCaseId: 
           <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
             <Chip label="Page" color="primary" variant="outlined" />
             <Chip label={useCase.page} sx={{ fontFamily: 'monospace' }} />
+            <Button size="small" component={Link} href={useCase.page} variant="outlined">
+              Open view
+            </Button>
           </Stack>
           <Typography variant="subtitle2">Dashboards</Typography>
           <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
@@ -217,3 +134,4 @@ export default function RoleFlowDashboard() {
     </PageContainer>
   );
 }
+

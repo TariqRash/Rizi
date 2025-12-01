@@ -536,3 +536,15 @@ export const roleFlows: RoleFlow[] = [
     ],
   },
 ];
+
+export const findUseCaseByPage = (page: string) => {
+  const normalizedPage = page.startsWith('/') ? page : `/${page}`;
+  for (const flow of roleFlows) {
+    for (const useCase of flow.useCases) {
+      if (useCase.page === normalizedPage) {
+        return { flow, useCase };
+      }
+    }
+  }
+  return undefined;
+};
