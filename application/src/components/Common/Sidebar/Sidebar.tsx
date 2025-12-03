@@ -105,6 +105,13 @@ const SidebarContent = ({ onNavigate }: { onNavigate?: () => void }) => {
           >
             My Notes
           </SidebarLink>
+          <SidebarLink
+            href="/dashboard/role-flows"
+            icon={<Assessment fontSize="small" />}
+            onClick={onNavigate}
+          >
+            Role Dashboards
+          </SidebarLink>
         </List>
       </Box>
 
