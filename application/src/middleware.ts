@@ -5,13 +5,6 @@ import { USER_ROLES } from 'lib/auth/roles';
 
 const ROLE_HOME_URL: Record<UserRole, string> = {
   [USER_ROLES.SUPER_ADMIN]: '/admin/dashboard',
-  [USER_ROLES.ADMIN]: '/admin/dashboard',
-  [USER_ROLES.MANAGER]: '/dashboard/manager/bookings',
-  [USER_ROLES.OWNER]: '/dashboard/owner/ledger',
-  [USER_ROLES.RESIDENT]: '/dashboard/my-notes',
-  [USER_ROLES.SERVICE_PROVIDER]: '/dashboard/provider/orders',
-  [USER_ROLES.VISITOR]: '/dashboard/visitor/pass',
-  [USER_ROLES.SUPERVISOR]: '/dashboard/supervisor/approvals',
   [USER_ROLES.USER]: '/dashboard/my-notes',
 };
 

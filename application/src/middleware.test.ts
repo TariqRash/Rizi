@@ -61,19 +61,6 @@ describe('middleware', () => {
       expect(location).toBe('http://localhost:3000/dashboard/my-notes');
     });
 
-    it('redirects managers to their bookings home', async () => {
-      mockAuth.mockResolvedValue({
-        user: { id: '2', role: USER_ROLES.MANAGER },
-      });
-
-      const request = createMockRequest('/');
-      const response = await middleware(request);
-      const location = response.headers.get('location');
-
-      expect(response.status).toBe(HTTP_STATUS.TEMPORARY_REDIRECT);
-      expect(location).toBe('http://localhost:3000/dashboard/manager/bookings');
-    });
-
     it('redirects authenticated super admins to /admin/dashboard', async () => {
       mockAuth.mockResolvedValue({
         user: { id: '1', role: USER_ROLES.SUPER_ADMIN },
@@ -282,7 +269,7 @@ describe('middleware', () => {
       expect(location).toBe('http://localhost:3000/admin/dashboard');
     });
 
-    it('redirects authenticated admin users from /signup to /admin/dashboard', async () => {
+    it('redirects authenticated admin users from /signup to /dashboard/my-notes', async () => {
       mockAuth.mockResolvedValue({
         user: { id: '1', role: USER_ROLES.ADMIN },
       });

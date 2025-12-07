@@ -1,5 +1,4 @@
 import { USER_ROLES } from 'lib/auth/roles';
-import { UserRole } from 'types';
 
 export type FlowField = {
   name: string;
@@ -26,7 +25,7 @@ export type UseCase = {
 };
 
 export type RoleFlow = {
-  role: UserRole;
+  role: USER_ROLES;
   label: string;
   purpose: string;
   heroCta: string;
@@ -306,7 +305,7 @@ export const roleFlows: RoleFlow[] = [
     ],
   },
   {
-    role: USER_ROLES.RESIDENT,
+    role: USER_ROLES.USER,
     label: 'Resident',
     purpose: 'Book amenities, submit tickets, and manage visitors.',
     heroCta: 'Self-serve bookings, payments, and support from one hub.',

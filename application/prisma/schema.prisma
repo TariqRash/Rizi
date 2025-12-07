@@ -286,6 +286,7 @@ model Expense {
 
 enum Role {
   SUPER_ADMIN
+  USER
   ADMIN
   MANAGER
   OWNER
