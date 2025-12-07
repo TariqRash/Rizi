@@ -57,7 +57,7 @@ jest.mock('../../lib/api/users', () => {
 describe('AdminDashboard', () => {
   it('renders dashboard title', async () => {
     render(<AdminDashboard />);
-    expect(await screen.findByText(/Admin Dashboard/i)).toBeInTheDocument();
+    expect(await screen.findByText(/Superadmin control/i)).toBeInTheDocument();
   });
 
   it('shows loading indicator while fetching', async () => {

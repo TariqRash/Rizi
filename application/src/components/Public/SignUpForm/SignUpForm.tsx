@@ -44,7 +44,7 @@ const SignUpForm: React.FC = () => {
       const res = await fetch('/api/auth/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password, name: USER_ROLES.USER }),
+        body: JSON.stringify({ email, password, name: email.split('@')[0] || USER_ROLES.USER }),
       });
       const data = await res.json();
       if (!res.ok || data.error) {

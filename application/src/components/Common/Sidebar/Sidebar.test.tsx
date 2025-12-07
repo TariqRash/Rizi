@@ -69,6 +69,16 @@ describe('Sidebar', () => {
     expect(screen.getByText('Admin Dashboard')).toBeInTheDocument();
   });
 
+  it('renders admin link for SUPER_ADMIN role', () => {
+    (useSession as jest.Mock).mockReturnValue({
+      data: { user: { name: 'Super', role: USER_ROLES.SUPER_ADMIN } },
+    });
+    (useMediaQuery as jest.Mock).mockReturnValue(false);
+
+    render(<Sidebar />);
+    expect(screen.getByText('Admin Dashboard')).toBeInTheDocument();
+  });
+
   it('calls signOut on logout click', () => {
     (useSession as jest.Mock).mockReturnValue({
       data: { user: { name: 'User', role: USER_ROLES.USER } },

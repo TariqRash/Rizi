@@ -51,7 +51,7 @@ describe('withAuth', () => {
   });
 
   it('calls handler with valid session and no role restriction', async () => {
-    mockAuth.mockResolvedValue({ user: { id: 'user-1', role: USER_ROLES.ADMIN } });
+    mockAuth.mockResolvedValue({ user: { id: 'user-1', role: USER_ROLES.ADMIN, email: 'admin@example.com' } });
     const mockRes = NextResponse.json({ ok: true });
     handler.mockResolvedValue(mockRes);
 
@@ -62,16 +62,16 @@ describe('withAuth', () => {
     expect(response).toBe(mockRes);
     expect(handler).toHaveBeenCalledWith(
       expect.any(Object),
-      {
+      expect.objectContaining({
         id: 'user-1',
         role: USER_ROLES.ADMIN,
-      },
+      }),
       Promise.resolve(params)
     );
   });
 
   it('calls handler when role is allowed', async () => {
-    mockAuth.mockResolvedValue({ user: { id: 'user-2', role: USER_ROLES.USER } });
+    mockAuth.mockResolvedValue({ user: { id: 'user-2', role: USER_ROLES.USER, email: 'user@example.com' } });
     const mockRes = NextResponse.json({ ok: true });
     handler.mockResolvedValue(mockRes);
 
@@ -82,10 +82,10 @@ describe('withAuth', () => {
     expect(response).toBe(mockRes);
     expect(handler).toHaveBeenCalledWith(
       expect.any(Object),
-      {
+      expect.objectContaining({
         id: 'user-2',
         role: USER_ROLES.USER,
-      },
+      }),
       Promise.resolve(params)
     );
   });

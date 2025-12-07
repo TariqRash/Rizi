@@ -26,11 +26,11 @@ export const COLORS = {
 // External URLs
 export const URLS = {
   // Product and contact
-  marketingSite: 'https://rizi.sa',
-  demo: 'https://rizi.sa/demo',
-  arabicDeck: 'https://rizi.sa/rizi-arabic-one-pager.pdf',
-  documentation: 'https://rizi.sa/docs',
-  contact: 'mailto:hello@rizi.sa',
+  marketingSite: 'https://rizi.app',
+  demo: 'https://rizi.app/demo',
+  arabicDeck: 'https://rizi.app/rizi-arabic-one-pager.pdf',
+  documentation: 'https://rizi.app/docs',
+  contact: 'mailto:hello@rizi.app',
 } as const;
 
 // Component Dimensions
@@ -78,7 +78,7 @@ export const TERMINAL = {
     '$ rizi login --tenant gulf-residences',
     '$ rizi compounds:list --region=gcc',
     '$ rizi residents:sync --compound=riyadh-villas --locale=ar',
-    '$ rizi tickets:create --type=maintenance --sla=4h --notify=operations@rizi.sa'
+    '$ rizi tickets:create --type=maintenance --sla=4h --notify=operations@rizi.app'
   ].join('\n'),
 } as const;
 

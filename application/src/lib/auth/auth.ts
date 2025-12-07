@@ -8,6 +8,7 @@ import { verifyPassword } from 'helpers/hash';
 import { User, UserRole } from 'types';
 import { InvalidCredentialsError } from './errors';
 import { serverConfig } from 'settings';
+import { SUPER_ADMIN_EMAIL, USER_ROLES } from './roles';
 
 const hasRole = (user: unknown): user is { id: string; role: UserRole } => {
   return typeof user === 'object' && user !== null && 'role' in user && 'id' in user;
@@ -89,7 +90,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async jwt({ token, user, trigger, session }) {
       if (user && hasRole(user)) {
         token.id = user.id;
-        token.role = (user as User).role;
+        const normalizedEmail = (user as User).email?.toLowerCase();
+        token.role =
+          normalizedEmail === SUPER_ADMIN_EMAIL ? USER_ROLES.SUPER_ADMIN : (user as User).role;
         token.email = (user as User).email;
         token.name = (user as User).name;
       }
