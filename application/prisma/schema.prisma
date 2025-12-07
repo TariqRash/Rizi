@@ -288,6 +288,13 @@ enum Role {
   SUPER_ADMIN
   USER
   ADMIN
+  MANAGER
+  OWNER
+  RESIDENT
+  SERVICE_PROVIDER
+  VISITOR
+  SUPERVISOR
+  USER
 }
 
 enum SubscriptionStatus {

@@ -3,6 +3,12 @@ import { UserRole } from 'types';
 export const USER_ROLES = {
   SUPER_ADMIN: 'SUPER_ADMIN',
   ADMIN: 'ADMIN',
+  MANAGER: 'MANAGER',
+  OWNER: 'OWNER',
+  RESIDENT: 'RESIDENT',
+  SERVICE_PROVIDER: 'SERVICE_PROVIDER',
+  VISITOR: 'VISITOR',
+  SUPERVISOR: 'SUPERVISOR',
   USER: 'USER',
 } as const;
 
