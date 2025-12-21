@@ -27,6 +27,18 @@ async function generateInvoiceHandler(
   user: { id: string; role: string; email: string }
 ): Promise<Response> {
   try {
+    const compoundId =
+      req.headers.get('x-compound-id') ??
+      req.cookies.get('active_compound_id')?.value ??
+      null;
+
+    if (!compoundId) {
+      return NextResponse.json(
+        { error: 'Compound context is required' },
+        { status: HTTP_STATUS.BAD_REQUEST }
+      );
+    }
+
     // Get user details
     const db = await createDatabaseService();
     const userDetails = await db.user.findById(user.id);
@@ -38,8 +50,8 @@ async function generateInvoiceHandler(
       );
     }
 
-    // Get user's current subscription
-    let userSubscription = await db.subscription.findByUserId(user.id);
+  // Get compound's current subscription (billing is per-compound)
+  let userSubscription = await db.subscription.findByUserId(compoundId);
     
     // If no subscription exists, create a FREE subscription
     if (!userSubscription || userSubscription.length === 0) {
@@ -62,6 +74,7 @@ async function generateInvoiceHandler(
       } else {
         const customer = await billingService.createCustomer(user.email, {
           userId: user.email,
+          compoundId,
         });
         customerId = customer.id;
       }
@@ -71,6 +84,7 @@ async function generateInvoiceHandler(
       
       // Create subscription record in database
       await db.subscription.create({
+        compoundId,
         customerId: customerId,
         plan: SubscriptionPlanEnum.FREE,
         status: SubscriptionStatusEnum.ACTIVE,
@@ -78,14 +92,14 @@ async function generateInvoiceHandler(
       });
 
       // Fetch the newly created subscription
-      userSubscription = await db.subscription.findByUserId(user.id);
+      userSubscription = await db.subscription.findByUserId(compoundId);
     }
 
     const subscription = userSubscription[0];
     
     if (!subscription.plan) {
       // Default to FREE if no plan is set
-      await db.subscription.update(user.id, {
+      await db.subscription.update(compoundId, {
         plan: SubscriptionPlanEnum.FREE,
         status: SubscriptionStatusEnum.ACTIVE,
       });

@@ -9,11 +9,11 @@ import { createDatabaseService } from 'services/database/databaseFactory';
  */
 export const getSubscription = async (
   request: NextRequest,
-  user: { id: string; role: string; email: string }
+  user: { id: string; role: string; email: string; compoundId: string }
 ): Promise<Response> => {
   try {
     const db = await createDatabaseService();
-    const subscription = await db.subscription.findByUserId(user.id);
+    const subscription = await db.subscription.findByUserId(user.compoundId);
 
     return NextResponse.json({ subscription: subscription });
   } catch (err: unknown) {

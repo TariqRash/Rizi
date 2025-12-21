@@ -46,7 +46,7 @@ function UseCaseCard({ useCase, onLog }: { useCase: UseCase; onLog: (useCaseId: 
           <Divider />
           <Grid container spacing={2}>
             {useCase.forms.map((form) => (
-              <Grid item xs={12} md={6} key={form.id}>
+              <Grid size={{ xs: 12, md: 6 }} key={form.id}>
                 <FlowForm
                   useCaseId={useCase.id}
                   formId={form.id}
@@ -121,7 +121,7 @@ export default function RoleFlowDashboard() {
             <CardContent>
               <Grid container spacing={3}>
                 {flow.useCases.map((useCase) => (
-                  <Grid item xs={12} key={useCase.id}>
+                  <Grid size={12} key={useCase.id}>
                     <UseCaseCard useCase={useCase} onLog={handleLog} />
                     <Box mt={2}>{renderLog(useCase.id)}</Box>
                   </Grid>

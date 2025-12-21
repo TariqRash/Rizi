@@ -30,12 +30,9 @@ const createSubscription = async (db: DatabaseClient, user: User) => {
       userId: user.email,
     });
     customerId = customer.id;
-    await db.subscription.create({
-      customerId: customer.id,
-      plan: null,
-      status: null,
-      userId: user.id,
-    });
+
+    // Billing is compound-scoped. Subscription rows should be created during compound onboarding.
+    // This email verification flow stays user-scoped, so we only create the Stripe customer.
   }
 
   await billingService.createSubscription(customerId, SubscriptionPlanEnum.FREE);

@@ -25,7 +25,8 @@ export type UseCase = {
 };
 
 export type RoleFlow = {
-  role: USER_ROLES;
+  // These role flows are higher-level personas, not necessarily the same as auth/user roles.
+  role: string;
   label: string;
   purpose: string;
   heroCta: string;
@@ -139,6 +140,46 @@ export const roleFlows: RoleFlow[] = [
         reports: ['Occupancy by compound', 'Booking load', 'Amenity performance'],
       },
       {
+        id: 'admin-buildings',
+        title: 'Buildings & units',
+        description: 'Set up buildings and unit inventory for the active compound.',
+        page: '/dashboard/admin/buildings',
+        forms: [
+          {
+            id: 'building-create',
+            title: 'Create building',
+            output: 'Building created for the active compound.',
+            fields: [
+              { name: 'name', label: 'Building name', required: true, placeholder: 'Building A' },
+            ],
+          },
+          {
+            id: 'unit-create',
+            title: 'Create unit',
+            output: 'Unit created under selected building.',
+            fields: [
+              { name: 'buildingId', label: 'Building ID', required: true, placeholder: 'Paste building id' },
+              { name: 'number', label: 'Unit number', required: true, placeholder: '101' },
+              {
+                name: 'type',
+                label: 'Unit type',
+                type: 'select',
+                options: ['APARTMENT', 'VILLA', 'TOWNHOUSE', 'OFFICE', 'PARKING'],
+                required: true,
+              },
+              {
+                name: 'status',
+                label: 'Status',
+                type: 'select',
+                options: ['VACANT', 'OCCUPIED', 'MAINTENANCE', 'RESERVED'],
+              },
+            ],
+          },
+        ],
+        dashboardWidgets: ['Building count', 'Unit inventory', 'Vacancy rate', 'Units needing maintenance'],
+        reports: ['Unit roster', 'Vacancy by building', 'Unit status distribution'],
+      },
+      {
         id: 'admin-billing',
         title: 'Billing & Stripe',
         description: 'Keep payment methods current and review invoices per compound.',
@@ -170,7 +211,7 @@ export const roleFlows: RoleFlow[] = [
     ],
   },
   {
-    role: USER_ROLES.MANAGER,
+    role: 'MANAGER',
     label: 'Manager',
     purpose: 'Operate the assigned compounds with booking, resident, and vendor visibility.',
     heroCta: 'Orchestrate amenities, bookings, and issue resolution for your compounds.',
@@ -238,7 +279,7 @@ export const roleFlows: RoleFlow[] = [
     ],
   },
   {
-    role: USER_ROLES.OWNER,
+    role: 'OWNER',
     label: 'Owner',
     purpose: 'Monitor owned units, ledger, and approvals.',
     heroCta: 'Review unit performance and authorize key changes.',
@@ -370,7 +411,7 @@ export const roleFlows: RoleFlow[] = [
     ],
   },
   {
-    role: USER_ROLES.SERVICE_PROVIDER,
+    role: 'SERVICE_PROVIDER',
     label: 'Service Provider',
     purpose: 'Deliver facility services with clear tasks, files, and approvals.',
     heroCta: 'See your assigned work, upload proofs, and get approvals fast.',
@@ -435,7 +476,7 @@ export const roleFlows: RoleFlow[] = [
     ],
   },
   {
-    role: USER_ROLES.VISITOR,
+    role: 'VISITOR',
     label: 'Visitor (Guest)',
     purpose: 'Request and track temporary access.',
     heroCta: 'Request passes and know exactly where to go.',
@@ -470,7 +511,7 @@ export const roleFlows: RoleFlow[] = [
     ],
   },
   {
-    role: USER_ROLES.SUPERVISOR,
+    role: 'SUPERVISOR',
     label: 'Supervisor',
     purpose: 'Run facility shifts, approve bookings, and coordinate providers.',
     heroCta: 'Keep facilities running with real-time approvals and inventory.',

@@ -43,23 +43,14 @@ type UseCasePageProps = {
 export default function UseCasePage({ pagePath }: UseCasePageProps) {
   const resolved = findUseCaseByPage(pagePath);
 
-  if (!resolved) {
-    return (
-      <PageContainer title="Use case not found">
-        <Alert severity="warning">No matching use case found for {pagePath}.</Alert>
-      </PageContainer>
-    );
-  }
-
-  const { flow, useCase } = resolved;
-
   const initialStates = useMemo(() => {
     const defaults: Record<string, FormState> = {};
-    useCase.forms.forEach((form) => {
+    const forms = resolved?.useCase.forms ?? [];
+    forms.forEach((form) => {
       defaults[form.id] = defaultFormValues(form.fields);
     });
     return defaults;
-  }, [useCase.forms]);
+  }, [resolved?.useCase.forms]);
 
   const [formStates, setFormStates] = useState<Record<string, FormState>>(initialStates);
   const [editingIds, setEditingIds] = useState<Record<string, string | null>>({});
@@ -70,6 +61,16 @@ export default function UseCasePage({ pagePath }: UseCasePageProps) {
     setEditingIds({});
     setEntries([]);
   }, [initialStates]);
+
+  if (!resolved) {
+    return (
+      <PageContainer title="Use case not found">
+        <Alert severity="warning">No matching use case found for {pagePath}.</Alert>
+      </PageContainer>
+    );
+  }
+
+  const { flow, useCase } = resolved;
 
   const handleSubmit = (useCaseId: string, payload: FormState, output: string, formId: string, formTitle: string) => {
     const summary = Object.entries(payload)
@@ -142,7 +143,7 @@ export default function UseCasePage({ pagePath }: UseCasePageProps) {
               <Divider />
               <Grid container spacing={2}>
                 {useCase.forms.map((form) => (
-                  <Grid item xs={12} md={6} key={form.id}>
+                  <Grid size={{ xs: 12, md: 6 }} key={form.id}>
                     <FlowForm
                       useCaseId={useCase.id}
                       formId={form.id}

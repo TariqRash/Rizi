@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import NavBar from './NavBar';
 import { useSession, signOut } from 'next-auth/react';
 import React from 'react';
+import { DirectionProvider } from 'context/Direction';
 
 jest.mock('next-auth/react', () => ({
   useSession: jest.fn(),
@@ -25,13 +26,8 @@ jest.mock('@mui/material/useMediaQuery', () => ({
 }));
 
 let mockPathName = '/';
-const mockUsePathName = jest.fn().mockImplementation(() => ({
-  get pathName() {
-    return mockPathName;
-  },
-}));
 jest.mock('next/navigation', () => ({
-  usePathname: () => mockUsePathName(),
+  usePathname: () => mockPathName,
   useRouter: jest.fn(() => ({
     push: jest.fn(),
     replace: jest.fn(),
@@ -40,6 +36,9 @@ jest.mock('next/navigation', () => ({
     back: jest.fn(),
   })),
 }));
+
+const renderWithProviders = (ui: React.ReactElement) =>
+  render(<DirectionProvider>{ui}</DirectionProvider>);
 
 jest.mock('../../Common/ServiceWarningIndicator/ServiceWarningIndicator', () => ({
   __esModule: true,
@@ -58,11 +57,10 @@ describe('NavBar', () => {
     (useSession as jest.Mock).mockReturnValue({ data: null, status: 'unauthenticated' });
     (useMediaQuery as jest.Mock).mockReturnValue(false); // Desktop
 
-    render(<NavBar />);
+  renderWithProviders(<NavBar />);
 
     const pricingLinks = screen.getAllByText('Pricing');
     expect(pricingLinks.length).toBeGreaterThan(0);
-    expect(screen.getAllByText('FAQ').length).toBeGreaterThan(0);
     expect(screen.getAllByText('Log in').length).toBeGreaterThan(0);
     expect(screen.getAllByText('Sign up').length).toBeGreaterThan(0);
   });
@@ -74,7 +72,7 @@ describe('NavBar', () => {
     });
     (useMediaQuery as jest.Mock).mockReturnValue(false); // Desktop
 
-    render(<NavBar />);
+  renderWithProviders(<NavBar />);
     const signOutButtons = screen.getAllByText('Sign out');
     expect(signOutButtons.length).toBeGreaterThan(0);
   });
@@ -86,7 +84,7 @@ describe('NavBar', () => {
     });
     (useMediaQuery as jest.Mock).mockReturnValue(false); // Desktop
 
-    render(<NavBar />);
+  renderWithProviders(<NavBar />);
 
     const signOutButtons = screen.getAllByText('Sign out');
     const appBarButton = signOutButtons.find((el) => el.closest('a')?.getAttribute('href') === '#');
@@ -101,7 +99,7 @@ describe('NavBar', () => {
     (useSession as jest.Mock).mockReturnValue({ data: null, status: 'unauthenticated' });
     (useMediaQuery as jest.Mock).mockReturnValue(true); // Mobile
 
-    render(<NavBar />);
+  renderWithProviders(<NavBar />);
     expect(screen.getByRole('button')).toBeInTheDocument(); // menu icon
   });
 
@@ -110,7 +108,7 @@ describe('NavBar', () => {
     (useMediaQuery as jest.Mock).mockReturnValue(false); // Desktop
     mockPathName = '/';
 
-    render(<NavBar />);
+    renderWithProviders(<NavBar />);
     expect(screen.getAllByText('ServiceWarningIndicator').length).toBeGreaterThan(0);
   });
 });

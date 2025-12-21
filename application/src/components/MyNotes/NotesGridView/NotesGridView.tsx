@@ -20,7 +20,7 @@ interface NotesGridViewProps {
   onViewNote: (noteId: string) => void;
   onEditNote: (noteId: string) => void;
   onDeleteNote: (noteId: string) => void;
-  recentlyUpdatedTitles: Set<string>;
+  recentlyUpdatedTitles?: Set<string>;
 }
 
 /**
@@ -34,7 +34,7 @@ const NotesGridView: React.FC<NotesGridViewProps> = ({
   onViewNote,
   onEditNote,
   onDeleteNote,
-  recentlyUpdatedTitles,
+  recentlyUpdatedTitles = new Set<string>(),
 }) => {
   if (isLoading) {
     return (

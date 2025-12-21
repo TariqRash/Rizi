@@ -13,6 +13,21 @@ export const createCustomer = async (
   user: { id: string; role: string; email: string }
 ): Promise<Response> => {
   try {
+    // Billing is compound-scoped. This endpoint is still callable, but it must receive
+    // an active compound context (sent via header or cookie) so we can attach the
+    // customer record + local subscription row to the right compound.
+    const compoundId =
+      request.headers.get('x-compound-id') ??
+      request.cookies.get('active_compound_id')?.value ??
+      null;
+
+    if (!compoundId) {
+      return NextResponse.json(
+        { error: 'Compound context is required' },
+        { status: HTTP_STATUS.BAD_REQUEST }
+      );
+    }
+
     const billingService = await createBillingService();
 
     const customers = await billingService.listCustomer(user.email);
@@ -23,10 +38,12 @@ export const createCustomer = async (
 
     const customer = await billingService.createCustomer(user.email, {
       userId: user.email,
+      compoundId,
     });
 
     const db = await createDatabaseService();
     await db.subscription.create({
+      compoundId,
       customerId: customer.id,
       plan: null,
       status: null,

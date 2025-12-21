@@ -17,7 +17,9 @@ model User {
   role      Role     @default(USER)
   createdAt DateTime @default(now())
 
-  subscription Subscription? @relation("UserSubscription")
+  // SaaS billing is managed per-compound; users may have an associated subscription record
+  // only for audit/history (e.g., who created it). Do not assume 1-user = 1-subscription.
+  subscriptions Subscription[]
   notes        Note[]
 
   verificationToken String?
@@ -33,8 +35,12 @@ model User {
 
 model Subscription {
   id         String              @id @default(uuid())
-  user       User                @relation("UserSubscription", fields: [userId], references: [id])
-  userId     String              @unique
+  // Primary tenant for billing is the compound
+  compound   Compound            @relation(fields: [compoundId], references: [id])
+  compoundId String              @unique
+  // Optional link to the user who created/owns billing configuration (audit)
+  user       User?               @relation(fields: [userId], references: [id])
+  userId     String?
   status     SubscriptionStatus?
   plan       SubscriptionPlan?
   customerId String?
@@ -64,6 +70,8 @@ model Compound {
   address   String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  subscription Subscription?
 
   buildings        Building[]
   units            Unit[]

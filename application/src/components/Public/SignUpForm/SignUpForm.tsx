@@ -15,6 +15,7 @@ import Link from 'next/link';
 import FormButton from 'components/Public/FormButton/FormButton';
 import { useNavigating } from 'hooks/navigation';
 import { USER_ROLES } from 'lib/auth/roles';
+import { useRouter } from 'next/navigation';
 
 /**
  * User registration form.
@@ -22,6 +23,7 @@ import { USER_ROLES } from 'lib/auth/roles';
  */
 const SignUpForm: React.FC = () => {
   const { setNavigating } = useNavigating();
+  const router = useRouter();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -51,6 +53,8 @@ const SignUpForm: React.FC = () => {
         setError(data.error || 'Something went wrong');
       } else {
         setSuccess(data.message || 'Account created.');
+        // Continue to compound onboarding (tenant-first)
+        router.replace('/onboarding/compound');
       }
     } catch (err) {
       console.error('Signup error:', err);

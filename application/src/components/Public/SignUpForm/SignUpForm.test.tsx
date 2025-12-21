@@ -17,6 +17,12 @@ jest.mock('next-auth/react', () => ({
   signIn: jest.fn(),
 }));
 
+jest.mock('next/navigation', () => ({
+  useRouter: () => ({
+    replace: jest.fn(),
+  }),
+}));
+
 jest.mock('../../../lib/api/stripe', () => ({
   StripeClient: jest.fn().mockImplementation(() => ({
     createSubscription: jest.fn(),
@@ -65,7 +71,7 @@ describe('SignUpForm', () => {
         expect.objectContaining({
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: 'user@example.com', password: 'securepass', name: 'USER' }),
+          body: JSON.stringify({ email: 'user@example.com', password: 'securepass', name: 'user' }),
         })
       );
     });

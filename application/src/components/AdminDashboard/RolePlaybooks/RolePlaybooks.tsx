@@ -97,7 +97,7 @@ const RolePlaybooks = () => {
       <CardContent>
         <Grid container spacing={2}>
           {ROLE_BLUEPRINTS.map((role) => (
-            <Grid item xs={12} md={6} key={role.role}>
+            <Grid size={{ xs: 12, md: 6 }} key={role.role}>
               <Card variant="outlined" sx={{ height: '100%' }}>
                 <CardContent>
                   <Stack spacing={1.5} alignItems="flex-start">

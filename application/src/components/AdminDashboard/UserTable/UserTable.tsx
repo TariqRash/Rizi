@@ -14,15 +14,15 @@ import {
   CircularProgress,
 } from '@mui/material';
 import { Edit as EditIcon } from '@mui/icons-material';
-import { SubscriptionStatusEnum, UserWithSubscriptions } from '../../../types';
+import { SubscriptionStatusEnum, UserWithSubscription } from '../../../types';
 import { USER_ROLES } from '../../../lib/auth/roles';
 
 interface UserTableProps {
-  users: UserWithSubscriptions[];
-  selectedUser: UserWithSubscriptions | null;
+  users: UserWithSubscription[];
+  selectedUser: UserWithSubscription | null;
   isLoadingEdit: boolean;
-  handleAdminSwitchChange: (user: UserWithSubscriptions, checked: boolean) => void;
-  handleEditClick: (user: UserWithSubscriptions) => void;
+  handleAdminSwitchChange: (user: UserWithSubscription, checked: boolean) => void;
+  handleEditClick: (user: UserWithSubscription) => void;
 }
 
 const statusColor = (status: string) => {

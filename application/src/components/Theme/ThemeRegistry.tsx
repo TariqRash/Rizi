@@ -27,10 +27,12 @@ export const themeRegistry: Record<string, BaseThemeConfig> = {
   [skyTheme.name]: skyTheme,
 };
 
-console.log(
-  `🎨 Registered ${Object.keys(themeRegistry).length} themes:`,
-  Object.keys(themeRegistry)
-);
+if (process.env.NODE_ENV === 'development') {
+  console.log(
+    `🎨 Registered ${Object.keys(themeRegistry).length} themes:`,
+    Object.keys(themeRegistry)
+  );
+}
 
 // Function to create theme with mode
 /**

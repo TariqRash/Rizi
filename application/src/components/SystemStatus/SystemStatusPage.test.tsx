@@ -4,6 +4,18 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import SystemStatusPage from './SystemStatusPage';
 
+jest.mock('next/navigation', () => ({
+  useRouter: () => ({
+    push: jest.fn(),
+    replace: jest.fn(),
+    prefetch: jest.fn(),
+    refresh: jest.fn(),
+    back: jest.fn(),
+  }),
+  usePathname: () => '/system-status',
+  useSearchParams: () => new URLSearchParams(),
+}));
+
 const theme = createTheme();
 
 const TestWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => (

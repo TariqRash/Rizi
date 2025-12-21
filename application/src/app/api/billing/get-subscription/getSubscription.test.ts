@@ -12,7 +12,7 @@ jest.mock('services/database/databaseFactory', () => ({
 }));
 
 describe('getSubscription API', () => {
-  const user = { id: 'u1', role: 'user', email: 'test@example.com' };
+  const user = { id: 'u1', role: 'user', email: 'test@example.com', compoundId: 'c1' };
   beforeEach(() => {
     jest.clearAllMocks();
   });

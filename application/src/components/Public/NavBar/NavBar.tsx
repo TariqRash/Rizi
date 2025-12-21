@@ -124,7 +124,6 @@ const NavBar = () => {
                   key={label}
                   component={Link}
                   href={href}
-                  prefetch={true}
                   onClick={onClick}
                   variant="text"
                   sx={{

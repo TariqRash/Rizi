@@ -1,8 +1,11 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import ConfirmationDialog from './ConfirmationDialog';
 
 describe('ConfirmationDialog', () => {
+  const user = userEvent.setup();
+
   const mockProps = {
     open: true,
     title: 'Confirm Action',
@@ -28,17 +31,17 @@ describe('ConfirmationDialog', () => {
     expect(screen.queryByText('Confirm Action')).not.toBeInTheDocument();
   });
 
-  it('calls onConfirm when confirm button is clicked', () => {
+  it('calls onConfirm when confirm button is clicked', async () => {
     render(<ConfirmationDialog {...mockProps} />);
 
-    fireEvent.click(screen.getByRole('button', { name: 'Yes' }));
+    await user.click(screen.getByRole('button', { name: 'Yes' }));
     expect(mockProps.onConfirm).toHaveBeenCalled();
   });
 
-  it('calls onCancel when cancel button is clicked', () => {
+  it('calls onCancel when cancel button is clicked', async () => {
     render(<ConfirmationDialog {...mockProps} />);
 
-    fireEvent.click(screen.getByRole('button', { name: 'No' }));
+    await user.click(screen.getByRole('button', { name: 'No' }));
     expect(mockProps.onCancel).toHaveBeenCalled();
   });
 
@@ -50,11 +53,13 @@ describe('ConfirmationDialog', () => {
     expect(confirmButton).toHaveClass('MuiButton-containedError');
   });
 
-  it('calls onCancel when dialog is closed via backdrop click', () => {
+  it('calls onCancel when dialog is closed via backdrop click', async () => {
     render(<ConfirmationDialog {...mockProps} />);
 
     // This simulates clicking the backdrop to close the dialog
-    fireEvent.click(document.querySelector('.MuiBackdrop-root'));
+    const backdrop = document.querySelector('.MuiBackdrop-root');
+    expect(backdrop).not.toBeNull();
+  await user.click(backdrop as Element);
 
     expect(mockProps.onCancel).toHaveBeenCalled();
   });

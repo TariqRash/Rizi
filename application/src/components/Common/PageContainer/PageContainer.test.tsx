@@ -4,7 +4,7 @@ import PageContainer from './PageContainer';
 
 describe('PageContainer', () => {
   it('renders title correctly', () => {
-    render(<PageContainer title="Test Page" />);
+    render(<PageContainer title="Test Page">content</PageContainer>);
     expect(screen.getByText('Test Page')).toBeInTheDocument();
   });
 

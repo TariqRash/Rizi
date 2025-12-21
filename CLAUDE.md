@@ -92,7 +92,7 @@ Key environment variables (see `env-example`):
 
 ## Deployment
 
-- DigitalOcean App Platform ready
+- DigitalOcean App Platform ready old but we will change it to Vercel but make sure its support Custom domain A , along with subdomain of our domain using CNAME or any easy one.
 - Custom deployment scripts in `setup/` directory
 - Docker support with PostgreSQL service
 - Environment-based configuration switching

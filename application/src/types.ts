@@ -18,7 +18,8 @@ export interface User {
 // Subscription type
 export interface Subscription {
   id: string;
-  userId: string;
+  compoundId: string;
+  userId?: string | null;
   status: SubscriptionStatus | null;
   plan: SubscriptionPlan | null;
   customerId: string | null;
@@ -40,9 +41,22 @@ export type SubscriptionStatus = 'ACTIVE' | 'CANCELED' | 'PENDING';
 
 export type SubscriptionPlan = 'FREE' | 'PRO';
 
+export type CompoundRole =
+  | 'COMPOUND_ADMIN'
+  | 'RESIDENT_ADMIN'
+  | 'RESIDENT'
+  | 'OWNER'
+  | 'STAFF';
+
 export interface UserWithSubscriptions extends User {
-  subscription: Subscription | null;
+  subscriptions: Subscription[];
 }
+
+/**
+ * Backwards-compatible view used by the existing AdminDashboard UI.
+ * (Eventually we should refactor the UI to be fully compound-aware.)
+ */
+export type UserWithSubscription = User & { subscription: Subscription | null };
 
 export enum SubscriptionStatusEnum {
   ACTIVE = 'ACTIVE',

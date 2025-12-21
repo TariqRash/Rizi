@@ -46,7 +46,6 @@ const SidebarLink = ({ href, icon, children, onClick }: SidebarLinkProps) => {
     <ListItem disablePadding sx={{ mb: 0.5 }}>
       <ListItemButton
         component={Link}
-        prefetch={true}
         href={href}
         onClick={onClick}
         selected={isActive}

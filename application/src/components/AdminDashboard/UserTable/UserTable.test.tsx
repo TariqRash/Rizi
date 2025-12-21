@@ -5,21 +5,25 @@ import { USER_ROLES } from '../../../lib/auth/roles';
 import {
   SubscriptionPlanEnum,
   SubscriptionStatusEnum,
-  UserWithSubscriptions,
+  UserWithSubscription,
 } from '../../../types';
 
 describe('<UserTable />', () => {
-  const users: UserWithSubscriptions[] = [
+  const users: UserWithSubscription[] = [
     {
       id: '1',
       name: 'Alice',
       email: 'alice@example.com',
+      passwordHash: 'x',
+      image: null,
+      emailVerified: true,
       role: USER_ROLES.USER,
       createdAt: new Date('2023-01-01'),
       subscription: {
         plan: SubscriptionPlanEnum.FREE,
         status: SubscriptionStatusEnum.ACTIVE,
         id: 'sub1',
+        compoundId: 'compound1',
         userId: '1',
         customerId: null,
         createdAt: new Date('2023-01-01'),
@@ -29,12 +33,16 @@ describe('<UserTable />', () => {
       id: '2',
       name: 'Bob',
       email: 'bob@example.com',
+      passwordHash: 'x',
+      image: null,
+      emailVerified: true,
       role: USER_ROLES.ADMIN,
       createdAt: new Date('2023-01-02'),
       subscription: {
         plan: SubscriptionPlanEnum.PRO,
         status: SubscriptionStatusEnum.CANCELED,
         id: 'sub2',
+        compoundId: 'compound2',
         userId: '2',
         customerId: null,
         createdAt: new Date('2023-01-02'),
@@ -44,12 +52,16 @@ describe('<UserTable />', () => {
       id: '3',
       name: 'Tariq',
       email: 'tariq@ib.com.sa',
+      passwordHash: 'x',
+      image: null,
+      emailVerified: true,
       role: USER_ROLES.SUPER_ADMIN,
       createdAt: new Date('2023-02-02'),
       subscription: {
         plan: SubscriptionPlanEnum.PRO,
         status: SubscriptionStatusEnum.ACTIVE,
         id: 'sub3',
+        compoundId: 'compound3',
         userId: '3',
         customerId: null,
         createdAt: new Date('2023-02-02'),

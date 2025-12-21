@@ -36,7 +36,8 @@ describe('MagicLinkVerifier', () => {
     });
     (signIn as jest.Mock).mockResolvedValue({});
     render(<MagicLinkVerifier />);
-    expect(screen.getByText(/Verifying magic link/i)).toBeInTheDocument();
+
+    // Wait for the async effect to complete and UI to update.
     await waitFor(() => {
       expect(signIn).toHaveBeenCalledWith('credentials', {
         email: 'test@example.com',
@@ -44,8 +45,8 @@ describe('MagicLinkVerifier', () => {
         redirect: false,
       });
       expect(mockReplace).toHaveBeenCalledWith('/');
-      expect(screen.getByText(/Login successful/i)).toBeInTheDocument();
     });
+    expect(await screen.findByText(/Login successful/i)).toBeInTheDocument();
   });
 
   it('shows error if signIn fails', async () => {
@@ -54,6 +55,8 @@ describe('MagicLinkVerifier', () => {
     });
     (signIn as jest.Mock).mockRejectedValue(new Error('Invalid token'));
     render(<MagicLinkVerifier />);
+
+    // Wait for the async effect to complete and error state to render.
     await waitFor(() => {
       expect(screen.getByText(/Failed to verify magic link/i)).toBeInTheDocument();
       expect(screen.getByText(/Invalid token/i)).toBeInTheDocument();

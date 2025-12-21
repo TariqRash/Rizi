@@ -4,17 +4,18 @@ import EditUserDialog from './EditUserDialog';
 import {
   SubscriptionPlanEnum,
   SubscriptionStatusEnum,
-  UserWithSubscriptions,
+  UserWithSubscription,
 } from '../../../types';
 
 describe('EditUserDialog', () => {
-  const editForm: Partial<UserWithSubscriptions> = {
+  const editForm: Partial<UserWithSubscription> = {
     name: 'Alice',
     email: 'alice@example.com',
     subscription: {
       plan: SubscriptionPlanEnum.FREE,
       status: SubscriptionStatusEnum.ACTIVE,
       id: 'sub1',
+      compoundId: 'compound1',
       userId: '1',
       customerId: null,
       createdAt: new Date(),

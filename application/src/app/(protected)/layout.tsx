@@ -2,6 +2,7 @@ import { Box } from '@mui/material';
 import Sidebar from 'components/Common/Sidebar/Sidebar';
 import MaterialThemeProvider from 'components/Theme/Theme';
 import { ThemePicker } from 'components/Theme/ThemePicker';
+import CompoundSwitcher from 'components/Common/CompoundSwitcher/CompoundSwitcher';
 import NavigationHandler from './NavigationHandler';
 
 /**
@@ -33,7 +34,10 @@ export default function ProtectedLayout({ children }: { children: React.ReactNod
               display: { xs: 'none', md: 'block' }, // Hide on mobile since FAB is used
             }}
           >
-            <ThemePicker />
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <CompoundSwitcher />
+              <ThemePicker />
+            </Box>
           </Box>
           {/* Mobile theme picker renders itself with fixed positioning */}
           <Box sx={{ display: { xs: 'block', md: 'none' } }}>

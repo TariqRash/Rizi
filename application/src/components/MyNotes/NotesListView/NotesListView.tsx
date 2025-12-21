@@ -24,7 +24,7 @@ interface NotesListViewProps {
   onViewNote: (noteId: string) => void;
   onEditNote: (noteId: string) => void;
   onDeleteNote: (noteId: string) => void;
-  recentlyUpdatedTitles: Set<string>;
+  recentlyUpdatedTitles?: Set<string>;
 }
 
 /**
@@ -38,7 +38,7 @@ const NotesListView: React.FC<NotesListViewProps> = ({
   onViewNote,
   onEditNote,
   onDeleteNote,
-  recentlyUpdatedTitles,
+  recentlyUpdatedTitles = new Set<string>(),
 }) => {
   if (isLoading) {
     return (

@@ -1,4 +1,4 @@
-import { Note, Subscription, User, UserWithSubscriptions, SubscriptionStatus } from 'types';
+import { Note, Subscription, User, SubscriptionStatus, UserWithSubscription } from 'types';
 import { ServiceConfigStatus, ConfigurableService } from '../status/serviceConfigStatus';
 
 export type DatabaseProvider = 'Postgres';
@@ -21,7 +21,7 @@ export abstract class DatabaseClient implements ConfigurableService {
       searchName?: string;
       filterPlan?: string;
       filterStatus?: string;
-    }) => Promise<{ users: UserWithSubscriptions[]; total: number }>;
+    }) => Promise<{ users: UserWithSubscription[]; total: number }>;
     create: (user: Omit<User, 'id' | 'createdAt'>) => Promise<User>;
     update: (id: string, user: Partial<Omit<User, 'id' | 'createdAt'>>) => Promise<User>;
     delete: (id: string) => Promise<void>;

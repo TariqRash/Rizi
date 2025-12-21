@@ -44,7 +44,9 @@ export function ThemePicker() {
       const themes = getAvailableThemes();
       setAvailableThemes(themes);
     } catch (error) {
-      console.warn('Failed to load available themes:', error);
+      if (process.env.NODE_ENV === 'development') {
+        console.warn('Failed to load available themes:', error);
+      }
       // Set a fallback theme list
       setAvailableThemes([
         { name: 'modernize', displayName: 'Modernize' },

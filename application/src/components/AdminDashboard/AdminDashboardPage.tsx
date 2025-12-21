@@ -4,7 +4,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Box, Typography, CardContent, CardHeader, CircularProgress, Card, Divider, Stack } from '@mui/material';
 import PageContainer from '../Common/PageContainer/PageContainer';
 import { UsersClient } from '../../lib/api/users';
-import { SubscriptionPlanEnum, SubscriptionStatusEnum, UserWithSubscriptions } from '../../types';
+import { SubscriptionPlanEnum, SubscriptionStatusEnum, UserWithSubscription } from '../../types';
 import Toast from 'components/Common/Toast/Toast';
 import { SUPER_ADMIN_EMAIL, USER_ROLES } from '../../lib/auth/roles';
 import { useSession } from 'next-auth/react';
@@ -12,13 +12,12 @@ import UserTable from './UserTable/UserTable';
 import EditUserDialog from './EditUserDialog/EditUserDialog';
 import UserFilterControls from './UserFilterControls/UserFilterControls';
 import Pagination from '../Common/Pagination/Pagination';
-import RolePlaybooks from './RolePlaybooks/RolePlaybooks';
 
 /**
  * Admin dashboard component for managing users, roles, and subscriptions.
  */
 export default function AdminDashboard() {
-  const [users, setUsers] = useState<UserWithSubscriptions[]>([]);
+  const [users, setUsers] = useState<UserWithSubscription[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -35,8 +34,8 @@ export default function AdminDashboard() {
   // Modal state
   const [openEdit, setOpenEdit] = useState(false);
   const [isLoadingEdit, setIsLoadingEdit] = useState(false);
-  const [selectedUser, setSelectedUser] = useState<UserWithSubscriptions | null>(null);
-  const [editForm, setEditForm] = useState<Partial<UserWithSubscriptions>>({});
+  const [selectedUser, setSelectedUser] = useState<UserWithSubscription | null>(null);
+  const [editForm, setEditForm] = useState<Partial<UserWithSubscription>>({});
 
   // Toast state
   const [toast, setToast] = useState<{
@@ -52,7 +51,7 @@ export default function AdminDashboard() {
   const session = useSession();
 
   // Open modal and set form state
-  const handleEditClick = (user: UserWithSubscriptions) => {
+  const handleEditClick = (user: UserWithSubscription) => {
     setSelectedUser(user);
     setEditForm({
       name: user.name,
@@ -78,7 +77,7 @@ export default function AdminDashboard() {
             ...(prev.subscription ?? {}),
             [e.target.name]: e.target.value as string,
           },
-        }) as Partial<UserWithSubscriptions>
+        }) as Partial<UserWithSubscription>
     );
   };
 
@@ -96,7 +95,7 @@ export default function AdminDashboard() {
     });
   };
 
-  const updateUser = async (userId: string, fields: Partial<UserWithSubscriptions>) => {
+  const updateUser = async (userId: string, fields: Partial<UserWithSubscription>) => {
     if (!userId) return;
     try {
       setIsLoadingEdit(true);
@@ -118,7 +117,7 @@ export default function AdminDashboard() {
   };
 
   // Add this function inside your AdminDashboard component
-  const handleAdminSwitchChange = async (user: UserWithSubscriptions, checked: boolean) => {
+  const handleAdminSwitchChange = async (user: UserWithSubscription, checked: boolean) => {
     if (user.role === USER_ROLES.SUPER_ADMIN) {
       setToast({ open: true, message: 'Super admin access is locked for security.', severity: 'info' });
       return;

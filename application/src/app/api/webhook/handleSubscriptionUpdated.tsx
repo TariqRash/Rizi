@@ -44,6 +44,11 @@ export const handleSubscriptionUpdated = async (json: any) => {
   });
 
   try {
+    if (!subscription.userId) {
+      console.warn(`⚠️ Subscription is missing userId for customer ID: ${customerId}. Email not sent.`);
+      return;
+    }
+
     const user = await db.user.findById(subscription.userId);
 
     if (!user) {

@@ -23,6 +23,18 @@ async function generateInvoiceStorageHandler(
   user: { id: string; role: string; email: string }
 ): Promise<Response> {
   try {
+    const compoundId =
+      req.headers.get('x-compound-id') ??
+      req.cookies.get('active_compound_id')?.value ??
+      null;
+
+    if (!compoundId) {
+      return NextResponse.json(
+        { error: 'Compound context is required' },
+        { status: HTTP_STATUS.BAD_REQUEST }
+      );
+    }
+
     // Get user details
     const db = await createDatabaseService();
     const userDetails = await db.user.findById(user.id);
@@ -34,8 +46,8 @@ async function generateInvoiceStorageHandler(
       );
     }
 
-    // Get user's current subscription
-    let userSubscription = await db.subscription.findByUserId(user.id);
+    // Get compound's current subscription (billing is per-compound)
+    let userSubscription = await db.subscription.findByUserId(compoundId);
     
     // If no subscription exists, create a FREE subscription
     if (!userSubscription || userSubscription.length === 0) {
@@ -58,6 +70,7 @@ async function generateInvoiceStorageHandler(
       } else {
         const customer = await billingService.createCustomer(user.email, {
           userId: user.email,
+          compoundId,
         });
         customerId = customer.id;
       }
@@ -67,6 +80,7 @@ async function generateInvoiceStorageHandler(
       
       // Create subscription record in database
       await db.subscription.create({
+        compoundId,
         customerId: customerId,
         plan: SubscriptionPlanEnum.FREE,
         status: SubscriptionStatusEnum.ACTIVE,
@@ -74,7 +88,7 @@ async function generateInvoiceStorageHandler(
       });
 
       // Fetch the newly created subscription
-      userSubscription = await db.subscription.findByUserId(user.id);
+      userSubscription = await db.subscription.findByUserId(compoundId);
     }
 
     const subscription = userSubscription[0];
@@ -164,9 +178,10 @@ async function generateInvoiceStorageHandler(
     // Upload PDF to storage with a unique path
     const fileName = `invoices/${user.id}/${invoiceData.invoiceNumber}.pdf`;
     
-    // Convert Buffer to File-like object for storage service
-    const file = new File([pdfBuffer], `${invoiceData.invoiceNumber}.pdf`, {
-      type: 'application/pdf'
+    // Convert Buffer to File-like object for storage service.
+    // Node's Buffer isn't always assignable to BlobPart in TS, so convert to Uint8Array.
+    const file = new File([new Uint8Array(pdfBuffer)], `${invoiceData.invoiceNumber}.pdf`, {
+      type: 'application/pdf',
     });
 
     await storageService.uploadFile(user.id, fileName, file, { ACL: 'private' });

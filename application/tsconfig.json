@@ -23,7 +23,7 @@
       "@/*": ["./src/*"],
       "settings": ["settings.ts"]
     },
-    "types": ["next-auth"]
+    "types": ["next-auth", "node"]
   },
   "include": [
     "next-env.d.ts",

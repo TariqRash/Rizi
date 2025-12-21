@@ -15,11 +15,11 @@ import {
   SelectChangeEvent,
 } from '@mui/material';
 import { Close as CloseIcon } from '@mui/icons-material';
-import { UserWithSubscriptions, SubscriptionPlanEnum } from '../../../types';
+import { UserWithSubscription, SubscriptionPlanEnum } from '../../../types';
 
 interface EditUserDialogProps {
   open: boolean;
-  editForm: Partial<UserWithSubscriptions>;
+  editForm: Partial<UserWithSubscription>;
   isLoadingEdit: boolean;
   handleEditChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleEditSubscriptionChange: (e: SelectChangeEvent) => void;

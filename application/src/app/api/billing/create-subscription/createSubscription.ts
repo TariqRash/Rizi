@@ -11,7 +11,8 @@ import { createBillingService } from 'services/billing/billingFactory';
  */
 export const createSubscription = async (
   request: NextRequest,
-  user: { id: string; role: string; email: string }
+  user: { id: string; role: string; email: string },
+  compoundId: string
 ): Promise<Response> => {
   try {
     const billingService = await createBillingService();
@@ -26,7 +27,7 @@ export const createSubscription = async (
 
     const db = await createDatabaseService();
 
-    const subscription = await db.subscription.findByUserId(user.id);
+  const subscription = await db.subscription.findByUserId(compoundId);
 
     if (subscription.length) {
       customerId = subscription[0].customerId;
@@ -35,19 +36,21 @@ export const createSubscription = async (
     if (!customerId) {
       const customer = await billingService.createCustomer(user.email, {
         userId: user.email,
+        compoundId,
       });
       customerId = customer.id;
       await db.subscription.create({
         customerId: customer.id,
         plan: null,
         status: null,
+        compoundId,
         userId: user.id,
       });
     }
 
     const { clientSecret } = await billingService.createSubscription(customerId, plan);
 
-    await db.subscription.update(user.id, {
+    await db.subscription.update(compoundId, {
       status: SubscriptionStatusEnum.PENDING,
       plan,
     });
