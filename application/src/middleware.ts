@@ -7,7 +7,6 @@ import { createDatabaseService } from 'services/database/databaseFactory';
 const ROLE_HOME_URL: Record<UserRole, string> = {
   [USER_ROLES.SUPER_ADMIN]: '/admin/dashboard',
   [USER_ROLES.USER]: '/dashboard/my-notes',
-  [USER_ROLES.ADMIN]: '/dashboard/my-notes',
 };
 
 /**

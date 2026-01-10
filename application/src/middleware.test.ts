@@ -27,7 +27,7 @@ describe('middleware', () => {
   });
 
   describe('Root path (/)', () => {
-    it('redirects authenticated admin users to /dashboard/my-notes', async () => {
+    it('redirects authenticated admin users to /admin/dashboard', async () => {
       mockAuth.mockResolvedValue({
         user: { id: '1', role: USER_ROLES.ADMIN },
       });
@@ -45,7 +45,7 @@ describe('middleware', () => {
 
       // Check the location header for redirect URL
       const location = response.headers.get('location');
-      expect(location).toBe('http://localhost:3000/dashboard/my-notes');
+      expect(location).toBe('http://localhost:3000/admin/dashboard');
     });
 
     it('redirects authenticated regular users to /dashboard/my-notes', async () => {
@@ -119,7 +119,7 @@ describe('middleware', () => {
       expect(location).toBe('http://localhost:3000/login');
     });
 
-    it('allows authenticated users to access dashboard', async () => {
+    it('redirects authenticated users to their role dashboard from /dashboard', async () => {
       mockAuth.mockResolvedValue({
         user: { id: '1', role: USER_ROLES.USER },
       });
@@ -127,7 +127,9 @@ describe('middleware', () => {
       const request = createMockRequest('/dashboard');
       const response = await middleware(request);
 
-      expect(response.status).not.toBe(HTTP_STATUS.TEMPORARY_REDIRECT);
+      expect(response.status).toBe(HTTP_STATUS.TEMPORARY_REDIRECT);
+      const location = response.headers.get('location');
+      expect(location).toBe('http://localhost:3000/dashboard/my-notes');
     });
 
     it('allows authenticated users to access nested dashboard routes', async () => {
@@ -154,7 +156,7 @@ describe('middleware', () => {
       expect(location).toBe('http://localhost:3000/login');
     });
 
-    it('redirects authenticated non-admin users to /', async () => {
+    it('redirects authenticated non-admin users to their role home', async () => {
       mockAuth.mockResolvedValue({
         user: { id: '1', role: USER_ROLES.USER },
       });
@@ -164,7 +166,7 @@ describe('middleware', () => {
 
       expect(response.status).toBe(HTTP_STATUS.TEMPORARY_REDIRECT);
       const location = response.headers.get('location');
-      expect(location).toBe('http://localhost:3000/');
+      expect(location).toBe('http://localhost:3000/dashboard/my-notes');
     });
 
     it('allows authenticated admin users to access admin routes', async () => {
@@ -223,12 +225,12 @@ describe('middleware', () => {
 
       expect(response.status).toBe(HTTP_STATUS.TEMPORARY_REDIRECT);
       const location = response.headers.get('location');
-      expect(location).toBe('http://localhost:3000/');
+      expect(location).toBe('http://localhost:3000/dashboard/my-notes');
     });
   });
 
   describe('Auth routes (/login, /signup)', () => {
-    it('redirects authenticated admin users from /login to /dashboard/my-notes', async () => {
+    it('redirects authenticated admin users from /login to /admin/dashboard', async () => {
       mockAuth.mockResolvedValue({
         user: { id: '1', role: USER_ROLES.ADMIN },
       });
@@ -238,7 +240,7 @@ describe('middleware', () => {
 
       expect(response.status).toBe(HTTP_STATUS.TEMPORARY_REDIRECT);
       const location = response.headers.get('location');
-      expect(location).toBe('http://localhost:3000/dashboard/my-notes');
+      expect(location).toBe('http://localhost:3000/admin/dashboard');
     });
 
     it('redirects authenticated regular users from /login to /dashboard/my-notes', async () => {
@@ -277,7 +279,7 @@ describe('middleware', () => {
 
       expect(response.status).toBe(HTTP_STATUS.TEMPORARY_REDIRECT);
       const location = response.headers.get('location');
-      expect(location).toBe('http://localhost:3000/dashboard/my-notes');
+      expect(location).toBe('http://localhost:3000/admin/dashboard');
     });
 
     it('redirects authenticated regular users from /signup to /dashboard/my-notes', async () => {
@@ -374,7 +376,9 @@ describe('middleware', () => {
       const request = createMockRequest('/dashboard', 'https://example.com');
       const response = await middleware(request);
 
-      expect(response.status).not.toBe(HTTP_STATUS.TEMPORARY_REDIRECT);
+      expect(response.status).toBe(HTTP_STATUS.TEMPORARY_REDIRECT);
+      const location = response.headers.get('location');
+      expect(location).toBe('https://example.com/dashboard/my-notes');
     });
     it('handles middleware with undefined role gracefully', async () => {
       mockAuth.mockResolvedValue({
